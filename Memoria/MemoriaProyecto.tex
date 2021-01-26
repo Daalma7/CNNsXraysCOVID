@@ -1,0 +1,88 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{adjustbox}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{boldline}
+\usepackage{amsmath}
+\usepackage{amssymb, amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{xlop}
+\usepackage{soul}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{amsthm} %Paquete para la terminología matemática
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{subfigure}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  numbers=left,
+  stepnumber=1,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+%Entorno de la librería matemática (Macros para que no salga en inglés).
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}{Corolario}[theorem]
+\theoremstyle{definition}
+\newtheorem{definition}{Definición}[section]
+
+% Meta
+% Custom
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\setlength\parindent{0pt}
+\definecolor{Light}{gray}{.90}
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\begin{document}
+\begin{titlepage}
+  \centering
+ \includegraphics[width=0.15\textwidth]{./images/exp.jpg}\par\vspace{1cm}
+  {\scshape\LARGE Universidad de Granada  \par}
+  \vspace{1cm}
+  {\scshape Proyecto Final\par}
+  \vspace{1.5cm}
+  {\huge\bfseries  Clasificación de radiografías torácicas para detección de COVID-19\par}
+  \vspace{2cm}
+  {\Large\itshape Alberto Luque Infante\\David Villar Martos\par}
+  \vfill
+  Quinto curso del Doble Grado de Ingeniería Informática y Matemáticas:\par
+  Visión por Computador
+
+  \vfill
+
+% Bottom of the page
+  {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+
+\section{Descripción del proyecto}
+
+\end{document}
+
+
+
