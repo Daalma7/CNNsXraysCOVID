@@ -117,7 +117,7 @@ Las neumonías con respecto al nivel radiológico se dividen en 3 tipos: Neumon�
 
 La neumonía vírica COVID-19 entra dentro de este último grupo.  Desde el mes de diciembre del año 2019,  cuando se detectó el primer caso de COVID-19,  el virus se ha propagado a nivel mundial teniendo una alta tasa de contagio, considerándose una pandemia desde marzo de 2020.  Ha provocado desde entonces la mayor crisis sanitaria que se ha vivido globalmente en los tiempos modernos, y es una prioridad el intentar controlar la pandemia. Las radiografías torácicas permiten diagnosticar la enfermedad y entender mejor cómo afecta al organismo, por lo que consideramos muy relevante su estudio.  Sin embargo,  es posible confundir una neumonía vírica provocada por COVID-19 con otras neumonías víricas ocasionadas por otros patógenos. \\
 
-Existen ya algunos estudios los cuales intentan encontrar patrones radiológicos que intenten diferenciar el COVID-19 de otros tipos de neumonías víricas, como en https://www.researchgate.net/publication/339839348_Performance_of_radiologists_in_differentiating_COVID-19_from_viral_pneumonia_on_chest_CT
+Existen ya algunos estudios los cuales intentan encontrar patrones radiológicos que intenten diferenciar el COVID-19 de otros tipos de neumonías víricas, como en https://www.researchgate.net/publication/339839348\_Performance\_of\_radiologists\_in\_differentiating\_COVID-19\_from\_viral\_pneumonia\_on\_chest\_CT
  o en https://insightsimaging.springeropen.com/articles/10.1186/s13244-020-00933-z,  donde se encuentran dificultades para ello.\\
  
  Por tanto, nuestro estudio tratará de desarrollar mediante redes neuronales preentrenadas, un método efectivo para clasificación de radiografías torácicas postoanteriores, que sea capaz de distinguir pacientes con pulmones sanos de pacientes con pulmones enfermos, por neumonías víricas, pero además, que sea capaz de distinguir entre neumonías víricas, centrándonos en la distinción de que el agente patógeno sea el COVID-19 o no, para un mejor estudio y entendimiento de esta enfermedad.
@@ -134,13 +134,13 @@ El conjunto de imágenes del dataset proceden de distintas fuentes. Las imágene
 \item 400 radiografias torácicas frontales de la fuente de github : https://github.com/armiro/COVID-CXNet
 \item 183  radiografias torácicas frontales del colegio médico de Hannover, Alemania: https://github.com/ml-workgroup/covid-19-image-repository/tree/master/png. 
 \item 617 radiografías torácicas frontales de entre las siguientes fuentes 
+\begin{itemize}
+\item Sociedad Italiana de Radiología Médicahttps://sirm.org/category/senza-categoria/covid-19/ 
 
-https://sirm.org/category/senza-categoria/covid-19/ , Sociedad Italiana de Radiología Médica
+\item https://eurorad.org, base de datos operada por Sociedad Europea de Radiología (ESR)
 
-https://eurorad.org, base de datos operada por Sociedad Europea de Radiología (ESR)
-
-https://github.com/ieee8023/covid-chestxray-dataset . Aquí las imágenes vienen de distintas fuentes públicas además de otras fuentes indirectas de hospitales y físicos.
-
+\item https://github.com/ieee8023/covid-chestxray-dataset . Aquí las imágenes vienen de distintas fuentes públicas además de otras fuentes indirectas de hospitales y físicos.
+\end{itemize}
 \end{itemize}.\\
 
 El resto de imágenes (imágenes de pulmones sanos e imágenes de pulmones con otro tipo de neumonías víricas) provienen del dataset https://github.com/ieee8023/covid-chestxray-dataset.  Las imágenes de este conjunto de datos provienen de un centro médico en Guangzhou.\\
@@ -341,6 +341,14 @@ Vamos a probar ahora a hacer un ajuste fino de la red completa, tomando como pes
 \section{Análisis del modelo: mapas de activación, mapas de calor y conclusiones}
 
 \section{Posibles propuestas de mejora}
+
+Como posibles propuestas para mejoras del modelo se podrían tratar los siguientes aspectos:
+
+\begin{itemize}
+\item Modificar diferentes conjuntos de hiperparámetros de la redes , como por ejemplo parámetros del data augmentation o dropout y seleccionar el conjunto para el que el conjunto de validación haya dado mejores resultados.  Puesto que hemos probado muchas redes, el tiempo de ejecución hubiera crecido bastante, pero reconocemos que todavía hay margen de mejora empleando el conjunto de validación para poder optimizar más los resultados de la red variando los hiperparámetros.
+\item Se podrían incluir más técnicas de visualización, como por ejemplo calcular las top n patches para algunas de las neuronas de la red, con el objetivo de ver qué regiones de las imágenes han dado mayor valor de activación para esas neuronas. Seleccionando algunas neuronas situadas cerca de la capa de clasificación, cuyo campo receptivo sería prácticamente toda la red, podremos observar cuáles son las imágenes que más claramente dan signos de ser normales, tener covid, o tener otro tipo de neumonías víricas, cosa que sería muy interesante para establecer los ejemplos más característicos de cada conjunto. Además podríamos seleccionar neuronas más alejadas de las capas finales, que tengan un campo receptivo menor, para ver qué patrones de medio tamaño se reconocen en la red que luego serán útiles para la clasificación, ya que facilitaría mucho también el encontrar patrones en una imagen que fueran determinante a la hora de decidir la clase de una imagen.
+\item Como hemos podido observar en los mapas de calor, cuando usamos una red preentrenada como extractor de características,  las redes neuronales focalizan su atención en muchas ocasiones en distintas zonas de la imagen que muy poco o nada tienen que ver con los pulmones, donde es evidente que es donde se puede deducir la presencia o no de enfermedad,  tal y como lo muestran los modelos de fine tuning que hemos podido visualizar por mapas de calor.  Lo que podríamos hacer es forzar a nuestro modelo a prestar atención a los pulmones en vez de a los bordes de la imagen, los cuales normalmente tienen letras u otros elementos perniciosos. Para ello podríamos intentar oscurecer los bordes de la imagen,  redimensionar la agrandándola y recortarla dejando fuera los bordes, o podríamos utilizar algún método más sofisticado donde pudiéramos reconocer y eliminar las letras, para posteriormente hacer una reconstrucción de la imagen.  Existen muchas alternativas para forzar a que la red preste atención a la zona pulmonar. Esto no va en contra de la filosofía de las redes neuronales, en cuanto a que ellas deciden qué patrones aprender a reconocer reconocer, puesto que lo único que hacemos es focalizar su atención en la zona de la imagen que nosotros queremos.
+\end{itemize}
 
 
 \section{Referencias}
