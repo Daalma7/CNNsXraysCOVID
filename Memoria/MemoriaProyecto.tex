@@ -84,9 +84,9 @@
 
 El proyecto consiste en abordar el problema de clasificación de radiografías torácicas con la intención de poder detectar casos positivos de COVID-19.\\
 
-Partiendo de un modelo de red convolucional preentrenado con la base de datos ImageNet, utilizarlo como base para encontrar el mejor modelo que nos permita llevar a cabo esta tarea.\\
+Partiendo de un modelo de red convolucional preentrenado con la base de datos ImageNet, lo utilizaremos como base para encontrar el mejor modelo que nos permita llevar a cabo esta tarea.\\
 
-En la base de datos escogida se utilizan imágenes clasificadas en tres clases distintas: radiografías de pulmones sanos (NORMAL), radiografías de pulmones en casos positivos de COVID-19 (COVID) y radiografías de pulmones afectados con neumonía vírica (Viral Pneumonia).\\
+En la base de datos escogida se utilizan imágenes clasificadas en tres clases distintas: radiografías de pulmones sanos (NORMAL), radiografías de pulmones en casos positivos de COVID-19 (COVID) y radiografías de pulmones afectados con neumonía vírica (Viral Pneumonia). Tener este conjunto de datos es muy interesante puesto que no sólo tendremos que distinguir pulmones sanos de pulmones enfermos, sino también distinguir entre pulmones enfermos con neumonías víricas,  siendo distinto el tipo de virus.\\
 
 Por tanto, nuestro problema de clasificación va a consistir en implementar un modelo que nos permita clasificar estas imágenes en las tres clases.\\
 
@@ -105,7 +105,14 @@ Por último, comentaremos algunas propuestas o aspectos que se podrían mejorar 
 
 \section{Análisis previo del problema}
 
-AQUI PODRIAN IR COSAS DE LAS QUE TE PASO TU AMIGO DE MEDICINA
+El uso de la radiografía simple de tórax para la detección de patologías torácicas,  es una técnica muy efectiva y se considera la exploración base a realizar, debido a la gran cantidad de información que es capaz de aportar.  Se utilizan también otro tipo de técnicas,  tales como la tomografía computerizada,  resonancia magnética, radioscopia o ecografía, pero siempre como apoyo a la radiografía torácica.\\
+
+Las proyecciones básicas de la radiografía simpla de tórax son la postoanterior (frontal) y la lateral.  Normalmente se practican en inspiración máxima y sostenida,  con el paciente en bipedestación.  La lectura de la radiografía de tórax por parte de un médico se hace siempre de forma sistemática, analizando secuencialmente y por orden: partes blandas, hueso, diafragma, mediastino, hilios pulmonares, pleura y parénquima pulmonar.\\
+
+Clínicamente la neumonía se define como una consolidación pulmonar en una radiografía de tórax junto con signos y síntomas clínicos de infección respiratoria (fiebre, tos y expectoración).\\
+
+La consolidación pulmonar típica es debida con frecuencia a la presencia de una neumonía, pero este patrón radiológico no es específico de ella, ya que cualquier enfermedad que ocupe el espacio aéreo distal producirá la misma imagen. Por tanto, el examen radiológico es indispensable para el diagnóstico, pero carece de especificidad, por lo que la rentabilidad diagnóstica de la radiografía está siempre ligada a la correlación clínica del paciente.
+
 
 \section{Base de Datos elegida para el problema}
 \subsection{Información de la Base de Datos}
@@ -113,19 +120,35 @@ La base de datos elegida para el proyecto se encuentra en Kaggle :
 
 https://www.kaggle.com/tawsifurrahman/covid19-radiography-database.\\
 
-La base de datos, en su actualización del 5 de enero de 2021 (versión 3), contiene un total de 1200 imágenes de la clase COVID, 1341 imagenes de la clase NORMAL y 1345 imágenes de la clase Viral Pneumonia.\\
+La base de datos, contiene un total de 3886 imágenes de radiografías torácicas postoanteriores en su actualización del 5 de enero de 2021 (versión 3). La distribución de imágenes por clases es de 1200 imágenes de la clase COVID, 1341 imagenes de la clase NORMAL y 1345 imágenes de la clase Viral Pneumonia.\\
 
-El conjunto de imágenes del dataset proceden de distintas fuentes. Las imágenes de la clase COVID proceden, entre otras fuentes, de un colegio médico alemán y del SIRM (Italian Society of Medical and Interventional Radiology).\\
+El conjunto de imágenes del dataset proceden de distintas fuentes. Las imágenes de la clase COVID proceden de las siguientes fuentes:
+\begin{itemize}
+\item 400 radiografias torácicas frontales de la fuente de github : https://github.com/armiro/COVID-CXNet
+\item 183  radiografias torácicas frontales del colegio médico de Hannover, Alemania: https://github.com/ml-workgroup/covid-19-image-repository/tree/master/png. 
+\item 617 radiografías torácicas frontales de entre las siguientes fuentes 
 
-Para las clases NORMAL y Viral Pneumonia también se han utilizado imágenes de distintas bases de datos públicas, algunas de ellas pertenecientes al ESR (European Society of Radiology).\\
+https://sirm.org/category/senza-categoria/covid-19/ , Sociedad Italiana de Radiología Médica
+
+https://eurorad.org, base de datos operada por Sociedad Europea de Radiología (ESR)
+
+https://github.com/ieee8023/covid-chestxray-dataset . Aquí las imágenes vienen de distintas fuentes públicas además de otras fuentes indirectas de hospitales y físicos.
+
+\end{itemize}.\\
+
+El resto de imágenes (imágenes de pulmones sanos e imágenes de pulmones con otro tipo de neumonías víricas) provienen del dataset https://github.com/ieee8023/covid-chestxray-dataset.  Las imágenes de este conjunto de datos provienen de un centro médico en Guangzhou.\\
+
+No hemos encontrado evidencia,  ni de que se repitan imágenes en las imágenes con coronavirus,  cosa que podría haber sido posible por el hecho de que se han extraído de varias fuentes,  y de hecho hay varias fuentes que cogen imágenes de otras que aquí aparecen (la de 400 coge de sirm,  por ejemplo) ni de que haya varias imágenes correspondientes a un mismo paciente en distintos instantes de tiempo. \\
+
+Este conjunto de imágenes podría considerarse un conjunto de datos pequeño en comparación con otros grandes conjuntos de datos ampliamente empleados en el campo de visión por computador como pudiera ser Imagenet, CIFAR,...  Sin embargo, debido a lo relativamente reciente que es la pandemia del COVID-19(1 año y 2 meses),  y debido a que son imágenes médicas, es complicado encontrar grandes conjuntos de datos para esta tarea. El conjunto de datos actual es el más extenso de entre todos los que hemos podido encontrar.   
 
 \subsection{Lectura de la Base de Datos}
 
-Para que las clases estén equilibradas vamos a tomar el mismo número de imágenes por clase, 1200, luego tendremos un total de 3600 imágenes.\\
+Para que las clases estén equilibradas vamos a tomar el mismo número de imágenes por clase, 1200, luego tendremos un total de 3600 imágenes. \\
 
 Para leer las imágenes, creamos un vector de etiquetas con las 1200 etiquetas para cada clase y utilizamos la función implementada \textit{leerImagenes}.\\
 
-Leemos las imágenes de cada clase interpolando para que tengan un tamaño de (224,224), que es el tamaño que tienen las imágenes de ImageNet.\\
+Leemos las imágenes de cada clase haciendo interpolación bilineal para que tengan un tamaño de (224,224), que es el tamaño que tienen las imágenes de ImageNet.\\
 \begin{lstlisting}
 def leerImagenes(clases, num_imgs, path):
   
@@ -311,6 +334,11 @@ Vamos a probar ahora a hacer un ajuste fino de la red completa, tomando como pes
 \section{Análisis del modelo: mapas de activación, mapas de calor y conclusiones}
 
 \section{Posibles propuestas de mejora}
+
+
+\section{Referencias}
+
+https://www.kaggle.com/tawsifurrahman/covid19-radiography-database
 
 
 
