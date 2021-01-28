@@ -12,7 +12,6 @@
 \usepackage{amsmath}
 \usepackage{amssymb, amsmath}
 \usepackage[margin=1in]{geometry}
-\usepackage{xcolor}
 \usepackage{xlop}
 \usepackage{soul}
 \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
@@ -23,6 +22,7 @@
 \usepackage{color}
 \usepackage{float}
 \usepackage{colortbl}
+\usepackage[table,xcdraw]{xcolor}
 
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -89,20 +89,19 @@ El proyecto consiste en abordar el problema de clasificación de radiografías t
 
 Partiendo de un modelo de red convolucional preentrenado con la base de datos ImageNet, lo utilizaremos como base para encontrar el mejor modelo que nos permita llevar a cabo esta tarea.\\
 
-En la base de datos escogida se utilizan imágenes clasificadas en tres clases distintas: radiografías de pulmones sanos (NORMAL), radiografías de pulmones en casos positivos de COVID-19 (COVID) y radiografías de pulmones afectados con neumonía vírica (Viral Pneumonia). Tener este conjunto de datos es muy interesante puesto que no sólo tendremos que distinguir pulmones sanos de pulmones enfermos, sino también distinguir entre pulmones enfermos con neumonías víricas,  siendo distinto el tipo de virus.\\
+En la base de datos escogida se utilizan imágenes clasificadas en tres clases distintas: radiografías de pulmones sanos (NORMAL), radiografías de pulmones en casos positivos de COVID-19 (COVID) y radiografías de pulmones afectados con neumonía vírica (Viral Pneumonia). Tener este conjunto de datos es muy interesante puesto que no sólo tendremos que distinguir pulmones sanos de pulmones enfermos, sino también distinguir entre pulmones enfermos con neumonías víricas,  siendo distinto el tipo de virus que las provoca.\\
 
-Por tanto, nuestro problema de clasificación va a consistir en implementar un modelo que nos permita clasificar estas imágenes en las tres clases.\\
+Por tanto, nuestro problema de clasificación va a consistir en implementar un modelo que nos permita clasificar una imagen como perteneciente a una de las 3 clases.\\
 
-Primero haremos un análisis previo del problema para poder enfocarlo correctamente. A continuación comenzaremos con la lectura y preprocesamiento de los datos, conformando los conjuntos de train y test.\\
+Primero haremos un análisis previo del problema para poder enfocarlo correctamente. A continuación comenzaremos con la lectura y preprocesamiento de los datos, conformando los conjuntos de entrenamiento y test.\\
 
-Hemos elegido como modelo inicial preentrenado con ImageNet el modelo DenseNet121. Partiendo de una primera versión muy básica poco a poco le iremos añadiendo mejoras hasta encontrar el modelo más óptimo.\\
+Hemos elegido como modelo inicial preentrenado con ImageNet el modelo DenseNet121. Partiendo de una primera versión muy básica poco a poco le iremos añadiendo mejoras hasta encontrar el modelo más óptimo. Debido a la calidad de los resultados iniciales que hemos obtenido, como se verá posteriormente,  hemos creído conveniente orientar el estudio desarrollando los aspectos que comentaremos ahora.\\
 
-Posteriormente, utilizaremos otros modelos conocidos preentrenados también en ImageNet para poder compararlos entre sí.\\
+Tras encontrar una versión razonablemente buena basándones en DenseNet121,  utilizaremos como base otros modelos conocidos preentrenados también en ImageNet, y emplearemos las misma modificaciones sobre ellos que las que hemos empleado sobre DenseNet121, para poder hacer valoraciones y comparaciones entre los mismos.\\
 
-Finalmente, vamos realizar un análisis pormenorizado de los resultados obtenidos, visualizando los mapas de activación y mapas de calor con el objetivo de detectar qué zonas de las imágenes de entrada son más discriminativas de cara a realizar la clasificación. De esta forma podremos entender un poco mejor el modelo y extraer conclusiones que puedan ayudar también al campo de la medicina.\\
+Finalmente, vamos realizar un análisis pormenorizado de los resultados obtenidos, visualizando los mapas de activación y mapas de calor con el objetivo de detectar qué zonas de las imágenes de entrada son más discriminativas de cara a realizar la clasificación. De esta forma podremos entender un poco mejor el funcionamiento del modelo que nos permitan valorarlo mejor y extraer conclusiones que puedan ayudar también al campo de la medicina.\\
 
 Por último, comentaremos algunas propuestas o aspectos que se podrían mejorar en un futuro en base a la experiencia obtenida.\\
-
 
 \newpage
 
@@ -123,7 +122,16 @@ La neumonía vírica COVID-19 entra dentro de este último grupo.  Desde el mes 
 Existen ya algunos estudios los cuales intentan encontrar patrones radiológicos que intenten diferenciar el COVID-19 de otros tipos de neumonías víricas, como en https://www.researchgate.net/publication/339839348\_Performance\_of\_radiologists\_in\_differentiating\_COVID-19\_from\_viral\_pneumonia\_on\_chest\_CT
  o en https://insightsimaging.springeropen.com/articles/10.1186/s13244-020-00933-z,  donde se encuentran dificultades para ello.\\
 
- Por tanto, nuestro estudio tratará de desarrollar mediante redes neuronales preentrenadas, un método efectivo para clasificación de radiografías torácicas postoanteriores, que sea capaz de distinguir pacientes con pulmones sanos de pacientes con pulmones enfermos, por neumonías víricas, pero además, que sea capaz de distinguir entre neumonías víricas, centrándonos en la distinción de si el agente patógeno es el COVID-19 o no lo es, para un mejor diagnóstico, estudio y entendimiento de esta enfermedad.
+Las redes neuronales neuronales convolucionales constituyen uno de los métodos más potentes en la actualidad para clasificación de imágenes,  y tienen una eficacia probada en una enorme cantidad de contextos.  Estos métodos han sido también empleados en el contexto de la medicina, y particularmente, en el contexto de la radiología
+
+(Yasaka K, Akai H, Kunimatsu A, Kiryu S, Abe O. Deep learning with convolutional neural network in radiology. Jpn J Radiol. 2018 Apr;36(4):257-272. doi: 10.1007/s11604-018-0726-3. Epub 2018 Mar 1. PMID: 29498017.)
+
+Yamashita, R., Nishio, M., Do, R.K.G. et al. Convolutional neural networks: an overview and application in radiology. Insights Imaging 9, 611–629 (2018). https://doi.org/10.1007/s13244-018-0639-9
+
+debido a su gran potencial de aprendizaje. Además, el hecho de usar redes neuronales preentrenadas puede ser muy útil no sólo a la hora de la rapidez a la hora de entrenarlas, sino debido a que se pueden aprovechar características aprendidas en otros contextos totalmente distintos para emplearlos en los problemas que nos conciernen.\\
+
+Por tanto,  pretendemos con nuestro estudio desarrollar mediante redes neuronales preentrenadas, un método efectivo para clasificación de radiografías torácicas postoanteriores, que sea capaz de distinguir pacientes con pulmones sanos de pacientes con pulmones enfermos, por neumonías víricas, pero además, que sea capaz de distinguir entre neumonías víricas, centrándonos en la distinción de si el agente patógeno es el COVID-19 o no lo es, para un mejor diagnóstico, estudio y entendimiento de esta enfermedad.  Utilizando distintos tipos de redes conocidas, entrenadas con pesos en Imagenet, podremos hacer comparaciones entre ellas y seleccionar la que mejores resultados aporte. Además intentaremos visualizar las diferentes activaciones que tiene la red para entender un poco mejor las características que ha aprendido, y comprobar que focaliza realmente su atención en la zona pulmonar.  El entender qué partes de la radiografía considera la red más importantes a la hora de clasificar podría usarse para mejorar el diagnóstico de la enfermedad y dirigir posteriores estudios de cara a entender mejor cómo afecta la enfermedad al organismo y cómo se diferencia de otro tipo de neumonías víricas \\
+ 
 \section{Base de Datos elegida para el problema}
 \subsection{Información de la Base de Datos}
 La base de datos elegida para el proyecto se encuentra en Kaggle :
@@ -257,8 +265,7 @@ print("La matriz de confusion de las predicciones ha sido: \n", confusion_matrix
 \end{lstlisting}
 
 
-
-RESULTADOS..................
+Los resultados los podemos observar en la siguiente tabla:
 
 \begin{table}[H]
 \centering
@@ -269,9 +276,27 @@ RESULTADOS..................
 \rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\
 \hline
 
-
 \end{tabular}
 \end{table}
+
+La matriz de dispersión de la clasificación ha sido la siguiente:
+
+\begin{table}[htpb]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 235                                      & 0                                         & 0                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 244                                      & 0                                         & 0                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 241                                      & 0                                         & 0                                       \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
+\end{table}
+
+
 
 \subsubsection{Version 1: Extractor de características inicial, entrenando la capa de salida}
 
