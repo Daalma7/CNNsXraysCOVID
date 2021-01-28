@@ -1,0 +1,56 @@
+\begin{thebibliography}{10}
+
+\bibitem{diferencias1}
+Chenglong Liu, Xiaoyang Wang, Chengin Liu, Qingfeng Sun, and Wenxian Peng.
+\newblock Differentiating novel coronavirus pneumonia from general pneumonia
+  based on machine learning.
+\newblock {\em BioMedical Engineering OnLine}, August 2020.
+
+\bibitem{diferencias2}
+S.A. Duzgun, G.~Durhan, and F.B. et~al. Demirkazik.
+\newblock Covid-19 pneumonia: the great radiological mimicker.
+\newblock {\em Insights Imaging}, 11:118, November 2020.
+
+\bibitem{diferencias3}
+Harrison~X. Bai, Ben Hsieh, Zeng Xiong, Kasey Halsey, Ji~Whae Choi, Thi My~Linh
+  Tran, Ian Pan, Lin-Bo Shi, Dong-Cui Wang, Ji~Mei, Xiao-Long Jiang, Qiu-Hua
+  Zeng, Thomas~K. Egglin, Ping-Feng Hu, Saurabh Agarwal, Fang-Fang Xie, Sha Li,
+  Terrance Healey, Michael~K. Atalay, and Wei-Hua Liao.
+\newblock Performance of radiologists in differentiating covid-19 from
+  non-covid-19 viral pneumonia at chest ct.
+\newblock {\em Radiology}, 296(2):E46--E54, 2020.
+
+\bibitem{problemas1}
+K.~Yasaka, H.~Akai, A.~Kunimatsu, S.~Kiryu, and O.~Abe.
+\newblock Deep learning with convolutional neural network in radiology.
+\newblock {\em Japanese journal of radiology}, 36:257--272, March 2020.
+
+\bibitem{problemas2}
+Tolga Bolukbasi, Kai-Wei Chang, James~Y Zou, Venkatesh Saligrama, and Adam~T
+  Kalai.
+\newblock Convolutional neural networks: an overview and application in
+  radiology.
+\newblock {\em Insights Imaging}, 9:611--629, August 2018.
+
+\bibitem{kaggle}
+https://www.kaggle.com/tawsifurrahman/covid19-radiography-database.
+
+\bibitem{ref1}
+https://github.com/armiro/covid-cxnet.
+
+\bibitem{ref2}
+https://github.com/ml-workgroup/covid-19-image-repository/tree/master/png.
+
+\bibitem{ref3}
+https://sirm.org/category/senza-categoria/covid-19/.
+
+\bibitem{ref4}
+https://eurorad.org.
+
+\bibitem{ref5}
+https://github.com/ieee8023/covid-chestxray-dataset.
+
+\bibitem{ref6}
+https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia.
+
+\end{thebibliography}

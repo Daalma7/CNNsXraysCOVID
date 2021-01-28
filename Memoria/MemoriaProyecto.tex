@@ -119,42 +119,33 @@ Las neumonías con respecto al nivel radiológico se dividen en 3 tipos: Neumon�
 
 La neumonía vírica COVID-19 entra dentro de este último grupo.  Desde el mes de diciembre del año 2019,  cuando se detectó el primer caso de COVID-19,  el virus se ha propagado a nivel mundial teniendo una alta tasa de contagio, considerándose una pandemia desde marzo de 2020.  Ha provocado desde entonces la mayor crisis sanitaria que se ha vivido globalmente en los tiempos modernos, y es una prioridad el intentar controlar la pandemia. Las radiografías torácicas permiten diagnosticar la enfermedad y entender mejor cómo afecta al organismo, por lo que consideramos muy relevante su estudio.  Sin embargo,  es posible confundir una neumonía vírica provocada por COVID-19 con otras neumonías víricas ocasionadas por otros patógenos. \\
 
-Existen ya algunos estudios los cuales intentan encontrar patrones radiológicos que intenten diferenciar el COVID-19 de otros tipos de neumonías víricas, como en https://www.researchgate.net/publication/339839348\_Performance\_of\_radiologists\_in\_differentiating\_COVID-19\_from\_viral\_pneumonia\_on\_chest\_CT
- o en https://insightsimaging.springeropen.com/articles/10.1186/s13244-020-00933-z,  donde se encuentran dificultades para ello.\\
+Existen ya algunos estudios los cuales intentan encontrar patrones radiológicos que intenten diferenciar el COVID-19 de otros tipos de neumonías víricas, como en \cite{diferencias1, diferencias2, diferencias3}\\
 
-Las redes neuronales neuronales convolucionales constituyen uno de los métodos más potentes en la actualidad para clasificación de imágenes,  y tienen una eficacia probada en una enorme cantidad de contextos.  Estos métodos han sido también empleados en el contexto de la medicina, y particularmente, en el contexto de la radiología
-
-(Yasaka K, Akai H, Kunimatsu A, Kiryu S, Abe O. Deep learning with convolutional neural network in radiology. Jpn J Radiol. 2018 Apr;36(4):257-272. doi: 10.1007/s11604-018-0726-3. Epub 2018 Mar 1. PMID: 29498017.)
-
-Yamashita, R., Nishio, M., Do, R.K.G. et al. Convolutional neural networks: an overview and application in radiology. Insights Imaging 9, 611–629 (2018). https://doi.org/10.1007/s13244-018-0639-9
-
-debido a su gran potencial de aprendizaje. Además, el hecho de usar redes neuronales preentrenadas puede ser muy útil no sólo a la hora de la rapidez a la hora de entrenarlas, sino debido a que se pueden aprovechar características aprendidas en otros contextos totalmente distintos para emplearlos en los problemas que nos conciernen.\\
+Las redes neuronales neuronales convolucionales constituyen uno de los métodos más potentes en la actualidad para clasificación de imágenes,  y tienen una eficacia probada en una enorme cantidad de contextos.  Estos métodos han sido también empleados en el contexto de la medicina, y particularmente, en el de la radiología para conseguir múltiples objetivos debido a su gran potencial de aprendizaje. \cite{problemas1, problemas2} Además, el hecho de usar redes neuronales preentrenadas puede ser muy útil no sólo a la hora de la rapidez a la hora de entrenarlas, sino debido a que se pueden aprovechar características aprendidas en otros contextos totalmente distintos para emplearlos en los problemas que nos conciernen.\\
 
 Por tanto,  pretendemos con nuestro estudio desarrollar mediante redes neuronales preentrenadas, un método efectivo para clasificación de radiografías torácicas postoanteriores, que sea capaz de distinguir pacientes con pulmones sanos de pacientes con pulmones enfermos, por neumonías víricas, pero además, que sea capaz de distinguir entre neumonías víricas, centrándonos en la distinción de si el agente patógeno es el COVID-19 o no lo es, para un mejor diagnóstico, estudio y entendimiento de esta enfermedad.  Utilizando distintos tipos de redes conocidas, entrenadas con pesos en Imagenet, podremos hacer comparaciones entre ellas y seleccionar la que mejores resultados aporte. Además intentaremos visualizar las diferentes activaciones que tiene la red para entender un poco mejor las características que ha aprendido, y comprobar que focaliza realmente su atención en la zona pulmonar.  El entender qué partes de la radiografía considera la red más importantes a la hora de clasificar podría usarse para mejorar el diagnóstico de la enfermedad y dirigir posteriores estudios de cara a entender mejor cómo afecta la enfermedad al organismo y cómo se diferencia de otro tipo de neumonías víricas \\
- 
+
 \section{Base de Datos elegida para el problema}
 \subsection{Información de la Base de Datos}
-La base de datos elegida para el proyecto se encuentra en Kaggle :
-
-https://www.kaggle.com/tawsifurrahman/covid19-radiography-database.\\
+La base de datos elegida para el proyecto se encuentra en Kaggle \cite{kaggle}\\
 
 La base de datos, contiene un total de 3886 imágenes de radiografías torácicas postoanteriores en su actualización del 5 de enero de 2021 (versión 3). La distribución de imágenes por clases es de 1200 imágenes de la clase COVID, 1341 imagenes de la clase NORMAL y 1345 imágenes de la clase Viral Pneumonia.\\
 
 El conjunto de imágenes del dataset proceden de distintas fuentes. Las imágenes de la clase COVID proceden de las siguientes fuentes:
 \begin{itemize}
-\item 400 radiografias torácicas frontales de la fuente de github : https://github.com/armiro/COVID-CXNet
-\item 183  radiografias torácicas frontales del colegio médico de Hannover, Alemania: https://github.com/ml-workgroup/covid-19-image-repository/tree/master/png.
-\item 617 radiografías torácicas frontales de entre las siguientes fuentes
+\item 400 radiografias torácicas frontales de la fuente de github \cite{ref1}
+\item 183  radiografias torácicas frontales del colegio médico de Hannover, Alemania \cite{ref2}
+\item 617 radiografías torácicas frontales de entre las siguientes fuentes:
 \begin{itemize}
-\item Sociedad Italiana de Radiología Médicahttps://sirm.org/category/senza-categoria/covid-19/
+\item Sociedad Italiana de Radiología Médica \cite{ref3}
 
-\item https://eurorad.org, base de datos operada por Sociedad Europea de Radiología (ESR)
+\item Base de datos operada por Sociedad Europea de Radiología (ESR) \cite{ref4}
 
-\item https://github.com/ieee8023/covid-chestxray-dataset . Aquí las imágenes vienen de distintas fuentes públicas además de otras fuentes indirectas de hospitales y físicos.
+\item Github donde las imágenes vienen de distintas fuentes públicas además de otras fuentes indirectas de hospitales y físicos \cite{ref5}
 \end{itemize}
 \end{itemize}.\\
 
-El resto de imágenes (imágenes de pulmones sanos e imágenes de pulmones con otro tipo de neumonías víricas) provienen del dataset https://github.com/ieee8023/covid-chestxray-dataset.  Las imágenes de este conjunto de datos provienen de un centro médico en Guangzhou.\\
+El resto de imágenes (imágenes de pulmones sanos e imágenes de pulmones con otro tipo de neumonías víricas) provienen del dataset publicado en Kaggle \cite{ref6}, las cuales provienen de un centro médico en Guangzhou.\\
 
 No hemos encontrado evidencia,  ni de que se repitan imágenes en las imágenes con coronavirus,  cosa que podría haber sido posible por el hecho de que se han extraído de varias fuentes,  y de hecho hay varias fuentes que cogen imágenes de otras que aquí aparecen (la de 400 coge de sirm,  por ejemplo) ni de que haya varias imágenes correspondientes a un mismo paciente en distintos instantes de tiempo. \\
 
@@ -277,6 +268,7 @@ Los resultados los podemos observar en la siguiente tabla:
 \hline
 
 \end{tabular}
+\caption{Resultados de la ejecución de la red DN-V0}
 \end{table}
 
 La matriz de confusión de la clasificación ha sido la siguiente:
@@ -291,9 +283,10 @@ La matriz de confusión de la clasificación ha sido la siguiente:
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 235                                      & 0                                         & 0                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 244                                      & 0                                         & 0                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 241                                      & 0                                         & 0                                       \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red DN-V0}
 \end{table}
 
 
@@ -331,8 +324,8 @@ Los resultados obtenidos han sido los siguientes:
 \hline
 \rowcolor{green} DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\
 \hline
-
 \end{tabular}
+\caption{Resultados de la ejecución para la red DN-V1, mostrando los anteriores}
 \end{table}
 
 \begin{table}[htbp]
@@ -345,9 +338,10 @@ Los resultados obtenidos han sido los siguientes:
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 231                                      & 1                                         & 3                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 6                                        & 135                                       & 103                                     \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 5                                        & 0                                         & 236                                     \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red DN-V1}
 \end{table}
 
 \subsubsection{Version 2: Data augmentation, más capas densas}
@@ -388,9 +382,6 @@ layer2 = keras.layers.Dense(units=200, activation="relu")(layer1)
 outputs = keras.layers.Dense(units=3, activation="softmax")(layer2)
 \end{lstlisting}
 
-
-RESULTADOS..........
-
 \begin{figure}[H]
   \centering
   \begin{minipage}[b]{0.45\textwidth}
@@ -419,6 +410,7 @@ DN-V1                                               & \textcolor[rgb]{0.129,0.12
 
 
 \end{tabular}
+\caption{Resultados de la ejecución para la red DN-V2, mostrando los anteriores}
 \end{table}
 
 
@@ -432,9 +424,10 @@ DN-V1                                               & \textcolor[rgb]{0.129,0.12
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 230                                      & 3                                         & 2                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 1                                        & 238                                       & 5                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 1                                        & 17                                        & 223                                     \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red DN-V2}
 \end{table}
 
 
@@ -448,8 +441,6 @@ layer2 = keras.layers.Dropout(0.5)(layer1)
 layer3 = keras.layers.Dense(units=200, activation="relu")(layer2)
 outputs = keras.layers.Dense(units=3, activation="softmax")(layer3)
 \end{lstlisting}
-
-RESULTADOS................
 
 \begin{figure}[H]
   \centering
@@ -480,6 +471,7 @@ DN-V2                                               & \textcolor[rgb]{0.129,0.12
 \hline
 
 \end{tabular}
+\caption{Resultados de la ejecución para la red DN-V2-reg mostrando los anteriores}
 \end{table}
 
 \begin{table}[htbp]
@@ -492,9 +484,10 @@ DN-V2                                               & \textcolor[rgb]{0.129,0.12
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 226                                      & 2                                         & 7                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 0                                        & 233                                       & 11                                      \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 0                                        & 11                                        & 230                                     \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red DN-V2-reg}
 \end{table}
 
 \subsubsection{Version 3: Fine tunning}
@@ -533,6 +526,7 @@ DN-V2-reg                                           & \textcolor[rgb]{0.129,0.12
 
 
 \end{tabular}
+\caption{Resultados de la ejecución para la red DN-V3, mostrando los anteriores}
 \end{table}
 
 \begin{table}[htbp]
@@ -545,9 +539,10 @@ DN-V2-reg                                           & \textcolor[rgb]{0.129,0.12
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 235                                      & 0                                         & 0                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 0                                        & 230                                       & 14                                      \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 4                                        & 1                                         & 236                                     \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red DN-V3}
 \end{table}
 
 
@@ -591,6 +586,7 @@ DN-V3                                               & \textcolor[rgb]{0.129,0.12
 
 
 \end{tabular}
+\caption{Resultados de la ejecución para la red ResNet, mostrando los anteriores}
 \end{table}
 
 
@@ -604,9 +600,10 @@ DN-V3                                               & \textcolor[rgb]{0.129,0.12
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 234                                      & 1                                         & 0                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 15                                       & 219                                       & 10                                      \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 46                                       & 14                                        & 181                                     \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red ResNet}
 \end{table}
 
 \begin{figure}[H]
@@ -645,6 +642,8 @@ ResNet                                              & \textcolor[rgb]{0.129,0.12
 
 
 \end{tabular}
+
+\caption{Resultados de la ejecución para la red ResNet-FT, mostrando los anteriores}
 \end{table}
 
 
@@ -658,9 +657,10 @@ ResNet                                              & \textcolor[rgb]{0.129,0.12
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 173                                      & 0                                         & 62                                      \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 2                                        & 220                                       & 22                                      \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 0                                        & 5                                         & 236                                     \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red ResNet-FT}
 \end{table}
 
 
@@ -703,6 +703,7 @@ ResNet-FT                                           & \textcolor[rgb]{0.129,0.12
 \hline
 
 \end{tabular}
+\caption{Resultados de la ejecución para la red VGG16, mostrando los anteriores}
 \end{table}
 
 \begin{table}[htbp]
@@ -715,9 +716,10 @@ ResNet-FT                                           & \textcolor[rgb]{0.129,0.12
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 234                                      & 0                                         & 1                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 2                                        & 232                                       & 10                                      \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 8                                        & 24                                        & 209                                     \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red VGG16}
 \end{table}
 
 
@@ -759,6 +761,7 @@ VGG16                                               & \textcolor[rgb]{0.129,0.12
 \rowcolor{green} VGG16-FT                           & \textcolor[rgb]{0.129,0.129,0.129}{1.099}   & \textcolor[rgb]{0.129,0.129,0.129}{0.3159 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0977 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.3576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.3388}                                                                       & 20                                                                                                              \\
 \hline
 \end{tabular}
+\caption{Resultados de la ejecución para la red VGG16-TF, mostrando los anteriores}
 \end{table}
 
 \begin{table}[htbp]
@@ -771,9 +774,10 @@ VGG16                                               & \textcolor[rgb]{0.129,0.12
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 0                                        & 235                                       & 0                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 0                                        & 244                                       & 0                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 0                                        & 241                                       & 0                                       \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red VGG16-TF}
 \end{table}
 
 \subsection{InceptionV3}
@@ -818,6 +822,8 @@ VGG16-FT                                            & \textcolor[rgb]{0.129,0.12
 \rowcolor{green} InceptionV3                        & \textcolor[rgb]{0.129,0.129,0.129}{0.2194 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9231 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2337 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9201}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8903}                                                                       & 20                                                                                                              \\
 \hline
 \end{tabular}
+
+\caption{Resultados de la ejecución para la red InceptionV3, mostrando los anteriores}
 \end{table}
 
 \begin{table}[htbp]
@@ -830,9 +836,10 @@ VGG16-FT                                            & \textcolor[rgb]{0.129,0.12
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 224                                      & 4                                         & 7                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 17                                       & 210                                       & 17                                      \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 11                                       & 23                                        & 207                                     \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red InceptionV3}
 \end{table}
 
 \begin{figure}[H]
@@ -878,6 +885,7 @@ InceptionV3                                         & \textcolor[rgb]{0.129,0.12
 \hline
 
 \end{tabular}
+\caption{Resultados de la ejecución para la red InceptionV3-FT, mostrando los anteriores}
 \end{table}
 
 \begin{table}[htbp]
@@ -890,9 +898,10 @@ InceptionV3                                         & \textcolor[rgb]{0.129,0.12
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 233                                      & 1                                         & 1                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 0                                        & 243                                       & 1                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 1                                        & 11                                        & 229                                     \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red InceptionV3-FT}
 \end{table}
 
 \subsection{Xception}
@@ -942,6 +951,7 @@ InceptionV3-FT                                      & \textcolor[rgb]{0.129,0.12
 \rowcolor{green} Xception                           & \textcolor[rgb]{0.129,0.129,0.129}{0.1746 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9405 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1319 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9153}                                                                       & 20                                                                                                              \\
 \hline
 \end{tabular}
+\caption{Resultados de la ejecución para la red Xception, mostrando los anteriores}
 \end{table}
 
 \begin{table}[htbp]
@@ -954,9 +964,10 @@ InceptionV3-FT                                      & \textcolor[rgb]{0.129,0.12
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 231                                      & 2                                         & 2                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 2                                        & 223                                       & 19                                      \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 8                                        & 28                                        & 205                                     \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red Xception}
 \end{table}
 
 \begin{figure}[H]
@@ -1005,6 +1016,7 @@ Xception                                            & \textcolor[rgb]{0.129,0.12
 \rowcolor{green} Xception-FT                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0157 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9946 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0352 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9861}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9875}                                                                       & 20                                                                                                              \\
 \hline
 \end{tabular}
+\caption{Resultados de la ejecución para la red Xception-FT mostrando los anteriores}
 \end{table}
 
 
@@ -1018,9 +1030,10 @@ Xception                                            & \textcolor[rgb]{0.129,0.12
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 234                                      & 0                                         & 1                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 0                                        & 244                                       & 0                                       \\ \hline
 \multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 0                                        & 8                                         & 233                                     \\ \hline
-                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
 \end{tabular}
 \end{center}
+\caption{Matriz de confusión para la red Xception-FT}
 \end{table}
 
 \subsection{Red from scratch}
@@ -1103,10 +1116,8 @@ Como posibles propuestas para mejoras del modelo se podrían tratar los siguient
 
 \section{Referencias}
 
-https://www.kaggle.com/tawsifurrahman/covid19-radiography-database
-
-
-
+\bibliography{bibliograph}
+\bibliographystyle{unsrt}
 
 
 
