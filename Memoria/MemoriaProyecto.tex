@@ -120,7 +120,7 @@ La neumonía vírica COVID-19 entra dentro de este último grupo.  Desde el mes 
 Existen ya algunos estudios los cuales intentan encontrar patrones radiológicos que intenten diferenciar el COVID-19 de otros tipos de neumonías víricas, como en https://www.researchgate.net/publication/339839348\_Performance\_of\_radiologists\_in\_differentiating\_COVID-19\_from\_viral\_pneumonia\_on\_chest\_CT
  o en https://insightsimaging.springeropen.com/articles/10.1186/s13244-020-00933-z,  donde se encuentran dificultades para ello.\\
  
- Por tanto, nuestro estudio tratará de desarrollar mediante redes neuronales preentrenadas, un método efectivo para clasificación de radiografías torácicas postoanteriores, que sea capaz de distinguir pacientes con pulmones sanos de pacientes con pulmones enfermos, por neumonías víricas, pero además, que sea capaz de distinguir entre neumonías víricas, centrándonos en la distinción de que el agente patógeno sea el COVID-19 o no, para un mejor estudio y entendimiento de esta enfermedad.
+ Por tanto, nuestro estudio tratará de desarrollar mediante redes neuronales preentrenadas, un método efectivo para clasificación de radiografías torácicas postoanteriores, que sea capaz de distinguir pacientes con pulmones sanos de pacientes con pulmones enfermos, por neumonías víricas, pero además, que sea capaz de distinguir entre neumonías víricas, centrándonos en la distinción de si el agente patógeno es el COVID-19 o no lo es, para un mejor diagnóstico, estudio y entendimiento de esta enfermedad.
 \section{Base de Datos elegida para el problema}
 \subsection{Información de la Base de Datos}
 La base de datos elegida para el proyecto se encuentra en Kaggle :
@@ -151,7 +151,7 @@ Este conjunto de imágenes podría considerarse un conjunto de datos pequeño en
 
 \subsection{Lectura de la Base de Datos}
 
-Para que las clases estén equilibradas vamos a tomar el mismo número de imágenes por clase, 1200, luego tendremos un total de 3600 imágenes. \\
+Para que las clases estén equilibradas vamos a tomar el mismo número de imágenes por clase, 1200, luego tendremos un total de 3600 imágenes.  El que los datos estén perfectamente equilibrados en nuestro conjunto de datos no quiere decir que en la vida real se den en la misma proporción,  pero preferimos que sea así par no favorecer en la tarea de clasificación a ninguna clase frente a las demás.\\
 
 Para leer las imágenes, creamos un vector de etiquetas con las 1200 etiquetas para cada clase y utilizamos la función implementada \textit{leerImagenes}.\\
 
@@ -196,15 +196,13 @@ Primero creamos un vector agrupando las imágenes de las tres clases y cambiamos
 
 A continuación, usando la función \textit{to\_categorical} obtenemos una representación binaria de las clases (la clase 0 pasa a ser [1,0,0], la 1 es [0,1,0] y la 2 es [0,0,1]).\\
 
-Después de hacer una permutación de las imágenes, dividimos en proporción 80\%-20\% para obtener los conjuntos de entrenamiento y de test, obteniendo 2880 imágenes para entrenar y 720 para test.
-
-
+Ahora, para dividir los datos entre entrenamiento y test vamos a optar por hacer una permutación aleatoria de las imágenes, y posteriormente dividiéndolas en proporción 80\%-20\% para entrenamiento y test respectivamente, obteniendo un total de 2880 imágenes para entrenar y 720 para test. Hemos decidido hacer esta partición de los datos debido en parte a que, como hemos hecho notar antes, no hemos encontrado ninguna evidencia de que haya imágenes dentro del conjunto de datos que correspondan al mismo paciente en diferentes instantes de tiempo que puedan hacer que la tarea de clasificación se vea influenciada por este hecho. De ser así, que haya imágenes para un mismo paciente que cayeran unas en entrenamiento y otras en test, harían que aumentara el sobreajuste y la varianza de la red, haciendo que probablemente no generalizara bien y diera peores resultados en test. También pensamos que hubiera sido bastante útil hacer una división de los datos de forma temporal, dejando una proporción de las imágenes tomadas más recientemente como las imágenes para test, puesto que la enfermedad del COVID-19 está en constante evolución y buscamos que la red sea útil para poder ayudar a clasificar casos actuales de COVID-19 (aunque entendemos que las imágenes de pulmones sanos y pulmones con otros tipos de neumonías víricas no varían tanto a lo largo del tiempo). Sin embargo no hemos podido hacer esta división ya que no poseemos información de cuando se han tomado las imágenes. Son por estos hecho por los que hemos optado hacer el tipo de partición que hemos hecho.
 
 \section{Implementación de los modelos}
 
 \subsection{DenseNet121}
 
-DenseNet121 es el modelo que hemos elegido para empezar. En las primeras versiones vamos a utilizar el modelo, con los pesos de ImageNet, solo como extractor de características, a partir del cuál añadiremos modificaciones. Finalmente, haremos un ajuste fino del modelo donde sí moveremos los pesos.
+DenseNet121 es el modelo base que hemos elegido para empezar, puesto que es un modelo potente y entendemos que podríamos dar unos resultados decentes desde un primer momento aplicando técnicas sobre este modelo. En las primeras versiones vamos a utilizar el modelo, con los pesos de ImageNet, solo como extractor de características, a partir del cuál añadiremos modificaciones. Finalmente, haremos un ajuste fino del modelo donde sí moveremos los pesos.
 
 \subsubsection{Version 0: Extractor de características inicial, sin entrenamiento}
 
@@ -213,9 +211,6 @@ Primero vamos a utilizar el modelo DenseNet121 preentrenado con IMAGENET sin ent
 Extraemos las características:
 
 \begin{lstlisting}
-#Definicion inicial de nuestro modelo preentrenado en imagenet.
-#Para usarlo como extractor de caracteristicas simple
-
 #Vamos a cargar el modelo antes del ultimo pooling, para usarlo como extractor de caracteristicas
 feat_extractor = DenseNet121(include_top=False, weights='imagenet', pooling='avg')
 feat_extractor.trainable = False
@@ -236,12 +231,13 @@ car_train = feat_extractor.predict(x_train, verbose=1)
 car_test = feat_extractor.predict(x_test, verbose=1)
 \end{lstlisting}
 
+El optimizador que he hemos empleado es el mismo que hemos usado en las prácticas, que es el que viene en las diapositivas, un gradiente descendente estocástico, con un tasa de aprendizaje de 0.01, con un paámetro de decaimiento de dicha tasa de aprendizaje de 1e-6, un momento de 0.9, y el descenso de gradiente se hará mediante la metodología Nesterov, en la cual, primero se realiza un desplazamiento en la dirección del gradiente acumulativo que llevamos, y posteriormente se realiza el nuevo cálculo del gradiente desde la posición en la que estemos en el espacio de búsqueda.\\
+
 Una vez tenemos las características, añadimos la capa softmax y hacemos las predicciones.
 
 \begin{lstlisting}
 inputs = keras.layers.Input(shape=[1024])
 outputs = keras.layers.Dense(units=3, activation="softmax")(inputs)
-
 
 dense_model = keras.Model(inputs=inputs, outputs=outputs)
 opt = SGD(lr=0.01, decay= 1e-6, momentum=0.9, nesterov=True)
@@ -339,6 +335,16 @@ Vamos a probar ahora a hacer un ajuste fino de la red completa, tomando como pes
 
 
 \section{Análisis del modelo: mapas de activación, mapas de calor y conclusiones}
+
+Un aspecto que hace que las redes neuronales sean utilizadas con mucha discreción en cualquier ámbito del conocimiento es porque son vistas como cajas negras las cuales no se sabe muy bien qué aprenden y sobre qué características concretas basan sus decisiones, con lo que es necesario que haya algún otro criterio que sea capaz la decisión que aporta una red neuronal, y en particular, también ocurre con las redes neuronales convolucionales. \\
+
+Nuestro objetivo en esta sección es intentar comprender un poco mejor qué características aprenden nuestras redes y qué elementos de la imagen consideran más importantes a la hora de tomar su decisión.  La motivación que tenemos para hacerlo es debido a que en nuestras imágenes tenemos otros elementos que no pertenecen al aparato respiratorio, y que podrían estar afectando negativamente a las decisiones que toman nuestras redes. Puesto que además usamos redes preentrenadas, puede que parte de las características que se detecten debido a dicho preentrenamiento sean reconocidas en lugares de la imagen que no sean del aparato respiratorio. Podrían ser elementos óseos o, de forma más problemática, letras que aparecen en algunas de las imágenes de nuestro conjunto de datos, las cuales son añadidas por algún programa tras haber obtenido la imagen radiográfica inicial.  Si la decisión que toma nuestra red estuviera basada en gran medida en dichas características, independientemente de los buenos resultados que diera esa red, sería indeseable y deberíamos descartarlos, puesto que estaría sobreajustando al conjunto de datos usado directamente, y encima usando características nada relevantes para la tarea que nos compete.
+
+\subsection{Mapas de activación}
+
+\subsection{Mapas de calor}
+
+\subsection{Conclusiones}
 
 \section{Posibles propuestas de mejora}
 
