@@ -1067,9 +1067,24 @@ Un aspecto que hace que las redes neuronales sean utilizadas con mucha discreci�
 
 Nuestro objetivo en esta sección es intentar comprender un poco mejor qué características aprenden nuestras redes y qué elementos de la imagen consideran más importantes a la hora de tomar su decisión.  La motivación que tenemos para hacerlo es debido a que en nuestras imágenes tenemos otros elementos que no pertenecen al aparato respiratorio, y que podrían estar afectando negativamente a las decisiones que toman nuestras redes. Puesto que además usamos redes preentrenadas, puede que parte de las características que se detecten debido a dicho preentrenamiento sean reconocidas en lugares de la imagen que no sean del aparato respiratorio. Podrían ser elementos óseos o, de forma más problemática, letras que aparecen en algunas de las imágenes de nuestro conjunto de datos, las cuales son añadidas por algún programa tras haber obtenido la imagen radiográfica inicial.  Si la decisión que toma nuestra red estuviera basada en gran medida en dichas características, independientemente de los buenos resultados que diera esa red, sería indeseable y deberíamos descartarlos, puesto que estaría sobreajustando al conjunto de datos usado directamente, y encima usando características nada relevantes para la tarea que nos compete.
 
+
 \subsection{Mapas de activación}
 
 \subsection{Mapas de calor}
+
+RESNET
+
+\includegraphics[width=0.85\textwidth]{./images/resnetfilters}
+
+\includegraphics[width=0.85\textwidth]{./images/resnetheatmap}
+
+XCEPTION
+
+\includegraphics[width=0.85\textwidth]{./images/xceptionfilters}
+
+\includegraphics[width=0.85\textwidth]{./images/heatmapxception}
+
+
 
 \subsection{Conclusiones}
 

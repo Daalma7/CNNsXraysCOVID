@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.8.6)  28 JAN 2021 16:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.8.6)  28 JAN 2021 18:03
 entering extended mode
 **./MemoriaProyecto.tex
 (MemoriaProyecto.tex
@@ -1230,26 +1230,53 @@ Underfull \hbox (badness 10000) in paragraph at lines 1066--1067
 
  []
 
-[18] [19]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1101.
- [20]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1101.
+[18]
+<./images/resnetfilters.png, id=385, 531.1845pt x 527.571pt>
+File: ./images/resnetfilters.png Graphic file (type png)
+<use ./images/resnetfilters.png>
+Package pdftex.def Info: ./images/resnetfilters.png  used on input line 1077.
+(pdftex.def)             Requested size: 385.02547pt x 382.41881pt.
+<./images/resnetheatmap.png, id=386, 532.99126pt x 528.17325pt>
+File: ./images/resnetheatmap.png Graphic file (type png)
+<use ./images/resnetheatmap.png>
+Package pdftex.def Info: ./images/resnetheatmap.png  used on input line 1079.
+(pdftex.def)             Requested size: 385.02547pt x 381.5578pt.
+ [19 <./images/resnetfilters.png>]
+<./images/xceptionfilters.png, id=392, 531.1845pt x 531.1845pt>
+File: ./images/xceptionfilters.png Graphic file (type png)
+<use ./images/xceptionfilters.png>
+Package pdftex.def Info: ./images/xceptionfilters.png  used on input line 1083.
+
+(pdftex.def)             Requested size: 385.02547pt x 385.0381pt.
+ [20 <./images/resnetheatmap.png>]
+<./images/heatmapxception.png, id=398, 534.798pt x 520.94624pt>
+File: ./images/heatmapxception.png Graphic file (type png)
+<use ./images/heatmapxception.png>
+Package pdftex.def Info: ./images/heatmapxception.png  used on input line 1085.
+
+(pdftex.def)             Requested size: 385.02547pt x 375.05716pt.
+
+[21 <./images/xceptionfilters.png>] [22 <./images/heatmapxception.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1116.
+
+[23]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1116.
  (MemoriaProyecto.aux
 LaTeX Info: Redefining \. on input line 26.
 LaTeX Info: Redefining \% on input line 26.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1101.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1101.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1116.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1116.
 
 Package rerunfilecheck Info: File `MemoriaProyecto.out' has not changed.
 (rerunfilecheck)             Checksum: A787811589213D8CF4512AE20D3387C8;1808.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1101.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1116.
  ) 
 Here is how much of TeX's memory you used:
- 15280 strings out of 480790
- 232172 string characters out of 2897302
+ 15315 strings out of 480790
+ 233081 string characters out of 2897302
  771587 words of memory out of 3000000
- 30839 multiletter control sequences out of 15000+200000
+ 30867 multiletter control sequences out of 15000+200000
  541227 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  45i,17n,72p,1638b,1914s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1265,9 +1292,9 @@ ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/a
 lber/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C
 :/Users/alber/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt
 10.pfb>
-Output written on MemoriaProyecto.pdf (21 pages, 1493520 bytes).
+Output written on MemoriaProyecto.pdf (24 pages, 4446865 bytes).
 PDF statistics:
- 461 PDF objects out of 1000 (max. 8388607)
- 162 named destinations out of 1000 (max. 500000)
- 333 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 482 PDF objects out of 1000 (max. 8388607)
+ 165 named destinations out of 1000 (max. 500000)
+ 353 words of extra memory for PDF output out of 10000 (max. 10000000)
 
