@@ -14,10 +14,11 @@
 \BOOKMARK [2][-]{subsection.4.3}{VGG16}{section.4}% 14
 \BOOKMARK [2][-]{subsection.4.4}{InceptionV3}{section.4}% 15
 \BOOKMARK [2][-]{subsection.4.5}{Xception}{section.4}% 16
-\BOOKMARK [1][-]{section.5}{An\341lisis del modelo: mapas de activaci\363n, mapas de calor y conclusiones}{}% 17
-\BOOKMARK [2][-]{subsection.5.1}{Mapas de activaci\363n}{section.5}% 18
-\BOOKMARK [2][-]{subsection.5.2}{Mapas de calor}{section.5}% 19
-\BOOKMARK [2][-]{subsection.5.3}{Conclusiones}{section.5}% 20
-\BOOKMARK [1][-]{section.6}{Posibles propuestas de mejora}{}% 21
-\BOOKMARK [1][-]{section.7}{Referencias}{}% 22
-\BOOKMARK [1][-]{section.8}{Referencias}{}% 23
+\BOOKMARK [2][-]{subsection.4.6}{Red from scratch}{section.4}% 17
+\BOOKMARK [1][-]{section.5}{An\341lisis del modelo: mapas de activaci\363n, mapas de calor y conclusiones}{}% 18
+\BOOKMARK [2][-]{subsection.5.1}{Mapas de activaci\363n}{section.5}% 19
+\BOOKMARK [2][-]{subsection.5.2}{Mapas de calor}{section.5}% 20
+\BOOKMARK [2][-]{subsection.5.3}{Conclusiones}{section.5}% 21
+\BOOKMARK [1][-]{section.6}{Posibles propuestas de mejora}{}% 22
+\BOOKMARK [1][-]{section.7}{Referencias}{}% 23
+\BOOKMARK [1][-]{section.8}{Referencias}{}% 24
