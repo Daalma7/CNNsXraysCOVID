@@ -97,9 +97,9 @@ Primero haremos un análisis previo del problema para poder enfocarlo correctame
 
 Hemos elegido como modelo inicial preentrenado con ImageNet el modelo DenseNet121. Partiendo de una primera versión muy básica poco a poco le iremos añadiendo mejoras hasta encontrar el modelo más óptimo. Debido a la calidad de los resultados iniciales que hemos obtenido, como se verá posteriormente,  hemos creído conveniente orientar el estudio desarrollando los aspectos que comentaremos ahora.\\
 
-Tras encontrar una versión razonablemente buena basándones en DenseNet121,  utilizaremos como base otros modelos conocidos preentrenados también en ImageNet, y emplearemos las misma modificaciones sobre ellos que las que hemos empleado sobre DenseNet121, para poder hacer valoraciones y comparaciones entre los mismos.\\
+Tras encontrar una versión razonablemente buena basándonos en DenseNet121,  utilizaremos como base otros modelos conocidos preentrenados también en ImageNet, y emplearemos las misma modificaciones sobre ellos que las que hemos empleado sobre DenseNet121, para poder hacer valoraciones y comparaciones entre los mismos.\\
 
-Finalmente, vamos realizar un análisis pormenorizado de los resultados obtenidos, visualizando los mapas de activación y mapas de calor con el objetivo de detectar qué zonas de las imágenes de entrada son más discriminativas de cara a realizar la clasificación. De esta forma podremos entender un poco mejor el funcionamiento del modelo que nos permitan valorarlo mejor y extraer conclusiones que puedan ayudar también al campo de la medicina.\\
+Finalmente, vamos realizar un análisis pormenorizado de los resultados obtenidos, visualizando los mapas de activación y mapas de calor con el objetivo de detectar qué zonas de las imágenes de entrada son más discriminativas de cara a realizar la clasificación. De esta forma podremos entender un poco mejor el funcionamiento del modelo que nos permita valorarlo mejor y extraer conclusiones que puedan ayudar también al campo de la medicina.\\
 
 Por último, comentaremos algunas propuestas o aspectos que se podrían mejorar en un futuro en base a la experiencia obtenida.\\
 
@@ -109,7 +109,7 @@ Por último, comentaremos algunas propuestas o aspectos que se podrían mejorar 
 
 El uso de la radiografía simple de tórax para la detección de patologías torácicas,  es una técnica muy efectiva y se considera la exploración base a realizar, debido a la gran cantidad de información que es capaz de aportar.  Se utilizan también otro tipo de técnicas,  tales como la tomografía computerizada,  resonancia magnética, radioscopia o ecografía, pero siempre como apoyo a la radiografía torácica.\\
 
-Las proyecciones básicas de la radiografía simpla de tórax son la postoanterior (frontal) y la lateral.  Normalmente se practican en inspiración máxima y sostenida,  con el paciente en bipedestación.  La lectura de la radiografía de tórax por parte de un médico se hace siempre de forma sistemática, analizando secuencialmente y por orden: partes blandas, hueso, diafragma, mediastino, hilios pulmonares, pleura y parénquima pulmonar.\\
+Las proyecciones básicas de la radiografía simple de tórax son la postoanterior (frontal) y la lateral.  Normalmente se practican en inspiración máxima y sostenida,  con el paciente en bipedestación.  La lectura de la radiografía de tórax por parte de un médico se hace siempre de forma sistemática, analizando secuencialmente y por orden: partes blandas, hueso, diafragma, mediastino, hilios pulmonares, pleura y parénquima pulmonar.\\
 
 Clínicamente la neumonía se define como una consolidación pulmonar en una radiografía de tórax junto con signos y síntomas clínicos de infección respiratoria (fiebre, tos y expectoración). La consolidación pulmonar se ve reflejada a nivel radiológico en que aumenta la opacidad de los pulmones debido al cúmulo de otras sustancias más densas que el aire.\\
 
@@ -305,6 +305,8 @@ Ahora vamos a reentrenar sólo la capa de salida, sin ningún tratamiento adicio
 \begin{lstlisting}
 hist = dense_model.fit(car_train, y_train, batch_size=32, epochs=20, validation_split=0.1)
 \end{lstlisting}
+
+Los resultados obtenidos han sido los siguientes:
 
 \begin{figure}[H]
   \centering
@@ -1103,10 +1105,6 @@ Como posibles propuestas para mejoras del modelo se podrían tratar los siguient
 
 https://www.kaggle.com/tawsifurrahman/covid19-radiography-database
 
-
-\section{Referencias}
-
-https://www.kaggle.com/tawsifurrahman/covid19-radiography-database
 
 
 
