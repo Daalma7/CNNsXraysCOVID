@@ -21,6 +21,9 @@
 \usepackage{subfigure}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{float}
+\usepackage{colortbl}
+
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -84,9 +87,9 @@
 
 El proyecto consiste en abordar el problema de clasificación de radiografías torácicas con la intención de poder detectar casos positivos de COVID-19.\\
 
-Partiendo de un modelo de red convolucional preentrenado con la base de datos ImageNet, utilizarlo como base para encontrar el mejor modelo que nos permita llevar a cabo esta tarea.\\
+Partiendo de un modelo de red convolucional preentrenado con la base de datos ImageNet, lo utilizaremos como base para encontrar el mejor modelo que nos permita llevar a cabo esta tarea.\\
 
-En la base de datos escogida se utilizan imágenes clasificadas en tres clases distintas: radiografías de pulmones sanos (NORMAL), radiografías de pulmones en casos positivos de COVID-19 (COVID) y radiografías de pulmones afectados con neumonía vírica (Viral Pneumonia).\\
+En la base de datos escogida se utilizan imágenes clasificadas en tres clases distintas: radiografías de pulmones sanos (NORMAL), radiografías de pulmones en casos positivos de COVID-19 (COVID) y radiografías de pulmones afectados con neumonía vírica (Viral Pneumonia). Tener este conjunto de datos es muy interesante puesto que no sólo tendremos que distinguir pulmones sanos de pulmones enfermos, sino también distinguir entre pulmones enfermos con neumonías víricas,  siendo distinto el tipo de virus.\\
 
 Por tanto, nuestro problema de clasificación va a consistir en implementar un modelo que nos permita clasificar estas imágenes en las tres clases.\\
 
@@ -105,27 +108,61 @@ Por último, comentaremos algunas propuestas o aspectos que se podrían mejorar 
 
 \section{Análisis previo del problema}
 
-AQUI PODRIAN IR COSAS DE LAS QUE TE PASO TU AMIGO DE MEDICINA
+El uso de la radiografía simple de tórax para la detección de patologías torácicas,  es una técnica muy efectiva y se considera la exploración base a realizar, debido a la gran cantidad de información que es capaz de aportar.  Se utilizan también otro tipo de técnicas,  tales como la tomografía computerizada,  resonancia magnética, radioscopia o ecografía, pero siempre como apoyo a la radiografía torácica.\\
 
+Las proyecciones básicas de la radiografía simple de tórax son la postoanterior (frontal) y la lateral.  Normalmente se practican en inspiración máxima y sostenida,  con el paciente en bipedestación.  La lectura de la radiografía de tórax por parte de un médico se hace siempre de forma sistemática, analizando secuencialmente y por orden: partes blandas, hueso, diafragma, mediastino, hilios pulmonares, pleura y parénquima pulmonar.\\
+
+Clínicamente la neumonía se define como una consolidación pulmonar en una radiografía de tórax junto con signos y síntomas clínicos de infección respiratoria (fiebre, tos y expectoración). La consolidación pulmonar se ve reflejada a nivel radiológico en que aumenta la opacidad de los pulmones debido al cúmulo de otras sustancias más densas que el aire.\\
+
+La consolidación pulmonar típica es debida con frecuencia a la presencia de una neumonía, pero este patrón radiológico no es específico de ella, ya que cualquier enfermedad que ocupe el espacio aéreo producirá la misma imagen. Por tanto, el examen radiológico es indispensable para el diagnóstico, pero carece de especificidad, por lo que el diagnóstico de la radiografía está ligada a la correlación clínica del paciente.\\
+
+Las neumonías con respecto al nivel radiológico se dividen en 3 tipos: Neumonías lobulares y segmentarias, Bronconeumonías, y por último, Neumonías intersticiales. \\
+
+La neumonía vírica COVID-19 entra dentro de este último grupo.  Desde el mes de diciembre del año 2019,  cuando se detectó el primer caso de COVID-19,  el virus se ha propagado a nivel mundial teniendo una alta tasa de contagio, considerándose una pandemia desde marzo de 2020.  Ha provocado desde entonces la mayor crisis sanitaria que se ha vivido globalmente en los tiempos modernos, y es una prioridad el intentar controlar la pandemia. Las radiografías torácicas permiten diagnosticar la enfermedad y entender mejor cómo afecta al organismo, por lo que consideramos muy relevante su estudio.  Sin embargo,  es posible confundir una neumonía vírica provocada por COVID-19 con otras neumonías víricas ocasionadas por otros patógenos. \\
+
+Existen ya algunos estudios los cuales intentan encontrar patrones radiológicos que intenten diferenciar el COVID-19 de otros tipos de neumonías víricas, como en 
+
+https://www.researchgate.net/publication/339839348\_Performance\_of\_radiologists\_in\_differentiating\_COVID-19\_from\_viral\_pneumonia\_on\_chest\_CT
+ o en 
+ 
+ https://insightsimaging.springeropen.com/articles/10.1186/s13244-020-00933-z,  donde se encuentran dificultades para ello.\\
+ 
+ Por tanto, nuestro estudio tratará de desarrollar mediante redes neuronales preentrenadas, un método efectivo para clasificación de radiografías torácicas postoanteriores, que sea capaz de distinguir pacientes con pulmones sanos de pacientes con pulmones enfermos, por neumonías víricas, pero además, que sea capaz de distinguir entre neumonías víricas, centrándonos en la distinción de que el agente patógeno sea el COVID-19 o no, para un mejor estudio y entendimiento de esta enfermedad.
 \section{Base de Datos elegida para el problema}
 \subsection{Información de la Base de Datos}
 La base de datos elegida para el proyecto se encuentra en Kaggle :
 
 https://www.kaggle.com/tawsifurrahman/covid19-radiography-database.\\
 
-La base de datos, en su actualización del 5 de enero de 2021 (versión 3), contiene un total de 1200 imágenes de la clase COVID, 1341 imagenes de la clase NORMAL y 1345 imágenes de la clase Viral Pneumonia.\\
+La base de datos, contiene un total de 3886 imágenes de radiografías torácicas postoanteriores en su actualización del 5 de enero de 2021 (versión 3). La distribución de imágenes por clases es de 1200 imágenes de la clase COVID, 1341 imagenes de la clase NORMAL y 1345 imágenes de la clase Viral Pneumonia.\\
 
-El conjunto de imágenes del dataset proceden de distintas fuentes. Las imágenes de la clase COVID proceden, entre otras fuentes, de un colegio médico alemán y del SIRM (Italian Society of Medical and Interventional Radiology).\\
+El conjunto de imágenes del dataset proceden de distintas fuentes. Las imágenes de la clase COVID proceden de las siguientes fuentes:
+\begin{itemize}
+\item 400 radiografias torácicas frontales de la fuente de github : https://github.com/armiro/COVID-CXNet
+\item 183  radiografias torácicas frontales del colegio médico de Hannover, Alemania: https://github.com/ml-workgroup/covid-19-image-repository/tree/master/png. 
+\item 617 radiografías torácicas frontales de entre las siguientes fuentes 
 
-Para las clases NORMAL y Viral Pneumonia también se han utilizado imágenes de distintas bases de datos públicas, algunas de ellas pertenecientes al ESR (European Society of Radiology).\\
+https://sirm.org/category/senza-categoria/covid-19/ , Sociedad Italiana de Radiología Médica
+
+https://eurorad.org, base de datos operada por Sociedad Europea de Radiología (ESR)
+
+https://github.com/ieee8023/covid-chestxray-dataset . Aquí las imágenes vienen de distintas fuentes públicas además de otras fuentes indirectas de hospitales y físicos.
+
+\end{itemize}.\\
+
+El resto de imágenes (imágenes de pulmones sanos e imágenes de pulmones con otro tipo de neumonías víricas) provienen del dataset https://github.com/ieee8023/covid-chestxray-dataset.  Las imágenes de este conjunto de datos provienen de un centro médico en Guangzhou.\\
+
+No hemos encontrado evidencia,  ni de que se repitan imágenes en las imágenes con coronavirus,  cosa que podría haber sido posible por el hecho de que se han extraído de varias fuentes,  y de hecho hay varias fuentes que cogen imágenes de otras que aquí aparecen (la de 400 coge de sirm,  por ejemplo) ni de que haya varias imágenes correspondientes a un mismo paciente en distintos instantes de tiempo. \\
+
+Este conjunto de imágenes podría considerarse un conjunto de datos pequeño en comparación con otros grandes conjuntos de datos ampliamente empleados en el campo de visión por computador como pudiera ser Imagenet, CIFAR,...  Sin embargo, debido a lo relativamente reciente que es la pandemia del COVID-19(1 año y 2 meses),  y debido a que son imágenes médicas, es complicado encontrar grandes conjuntos de datos para esta tarea. El conjunto de datos actual es el más extenso de entre todos los que hemos podido encontrar.   
 
 \subsection{Lectura de la Base de Datos}
 
-Para que las clases estén equilibradas vamos a tomar el mismo número de imágenes por clase, 1200, luego tendremos un total de 3600 imágenes.\\
+Para que las clases estén equilibradas vamos a tomar el mismo número de imágenes por clase, 1200, luego tendremos un total de 3600 imágenes. \\
 
 Para leer las imágenes, creamos un vector de etiquetas con las 1200 etiquetas para cada clase y utilizamos la función implementada \textit{leerImagenes}.\\
 
-Leemos las imágenes de cada clase interpolando para que tengan un tamaño de (224,224), que es el tamaño que tienen las imágenes de ImageNet.\\
+Leemos las imágenes de cada clase haciendo interpolación bilineal para que tengan un tamaño de (224,224), que es el tamaño que tienen las imágenes de ImageNet.\\
 \begin{lstlisting}
 def leerImagenes(clases, num_imgs, path):
   
@@ -141,7 +178,7 @@ def leerImagenes(clases, num_imgs, path):
 
 Un ejemplo de una imagen de cada clase es el siguiente:
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \begin{minipage}[b]{0.25\textwidth}
     \includegraphics[scale=0.65]{./images/ejemploCOVID}
@@ -227,7 +264,21 @@ y_preds = np.argmax(y_preds, axis=1)
 print("La matriz de confusion de las predicciones ha sido: \n", confusion_matrix(y_test_conf, y_preds))
 \end{lstlisting}
 
-FALTAN RESULTADOS CUANDO EJECUTEMOS CON TODAS LAS IMGS
+
+
+RESULTADOS..................
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+
+
+\end{tabular}
+\end{table}
 
 \subsubsection{Version 1: Extractor de características inicial, entrenando la capa de salida}
 
@@ -237,8 +288,32 @@ Ahora vamos a reentrenar sólo la capa de salida, sin ningún tratamiento adicio
 hist = dense_model.fit(car_train, y_train, batch_size=32, epochs=20, validation_split=0.1)
 \end{lstlisting}
 
-RESULTADOS...........
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/v1loss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/v1acc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
 
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+\hline
+\rowcolor{green} DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\ 
+\hline
+
+\end{tabular}
+\end{table}
 
 \subsubsection{Version 2: Data augmentation, más capas densas}
 
@@ -281,6 +356,36 @@ outputs = keras.layers.Dense(units=3, activation="softmax")(layer2)
 
 RESULTADOS..........
 
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/v2loss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/v2acc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+\hline
+DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\ 
+\hline
+\rowcolor{green} DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\ 
+\hline
+
+
+\end{tabular}
+\end{table}
+
 
 En esta última versión puede ser que tengamos un poco de overfitting puesto que el validation loss no decrece al mismo ritmo que el training loss. Regularizamos añadiendo una capa de Dropout.
 
@@ -294,23 +399,433 @@ outputs = keras.layers.Dense(units=3, activation="softmax")(layer3)
 
 RESULTADOS................
 
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/v2-2loss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/v2-2acc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+\hline
+DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\ 
+\hline
+\rowcolor{green} DN-V2-reg                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0883 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9683 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1494 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9569}                                                                       & 20                                                                                                              \\ 
+\hline
+
+\end{tabular}
+\end{table}
 
 \subsubsection{Version 3: Fine tunning}
 
 Vamos a probar ahora a hacer un ajuste fino de la red completa, tomando como pesos iniciales los de imagenet. Ahora ya no solo vamos a utilizar DenseNet como extractor de características, sino que, en vez de estar la red congelada, vamos a ir moviendo sus pesos con el entrenamiento.
 
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/v3loss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/v3acc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+\hline
+DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2-reg                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0883 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9683 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1494 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9569}                                                                       & 20                                                                                                              \\ 
+\hline
+\rowcolor{green} DN-V3                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0089 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9964 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0924 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9826}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9736}                                                                       & 20                                                                                                              \\ 
+\hline
+
+
+\end{tabular}
+\end{table}
+
 \subsection{ResNet50}
 
-\subsection{VGG19}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/resnet1loss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/resnet1acc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
+
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+\hline
+DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2-reg                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0883 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9683 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1494 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9569}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V3                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0089 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9964 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0924 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9826}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9736}                                                                       & 20                                                                                                              \\ 
+\hline
+\rowcolor{green} ResNet                                              & \textcolor[rgb]{0.129,0.129,0.129}{0.2519 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9063 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2134 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9236}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8805}                                                                       & 20                                                                                                              \\ 
+\hline
+
+
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/resnet2loss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/resnet2acc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+\hline
+DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2-reg                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0883 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9683 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1494 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9569}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V3                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0089 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9964 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0924 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9826}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9736}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet                                              & \textcolor[rgb]{0.129,0.129,0.129}{0.2519 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9063 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2134 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9236}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8805}                                                                       & 20                                                                                                              \\ 
+\hline
+\rowcolor{green} ResNet-FT                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0102 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9952 } & \textcolor[rgb]{0.129,0.129,0.129}{0.5594 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.8576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8736}                                                                       & 20                                                                                                              \\ 
+\hline
+
+
+\end{tabular}
+\end{table}
+
+
+\subsection{VGG16}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/vggloss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/vggacc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+\hline
+DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2-reg                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0883 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9683 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1494 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9569}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V3                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0089 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9964 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0924 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9826}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9736}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet                                              & \textcolor[rgb]{0.129,0.129,0.129}{0.2519 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9063 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2134 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9236}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8805}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet-FT                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0102 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9952 } & \textcolor[rgb]{0.129,0.129,0.129}{0.5594 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.8576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8736}                                                                       & 20                                                                                                              \\ 
+\hline
+\rowcolor{green} VGG16                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.1057 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9626 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1063 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9375}                                                                       & 20                                                                                                              \\ 
+\hline
+
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/vgg2loss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/vgg2acc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+\hline
+DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2-reg                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0883 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9683 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1494 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9569}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V3                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0089 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9964 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0924 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9826}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9736}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet                                              & \textcolor[rgb]{0.129,0.129,0.129}{0.2519 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9063 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2134 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9236}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8805}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet-FT                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0102 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9952 } & \textcolor[rgb]{0.129,0.129,0.129}{0.5594 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.8576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8736}                                                                       & 20                                                                                                              \\ 
+\hline
+VGG16                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.1057 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9626 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1063 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9375}                                                                       & 20                                                                                                              \\ 
+\hline
+\rowcolor{green} VGG16-FT                           & \textcolor[rgb]{0.129,0.129,0.129}{1.099}   & \textcolor[rgb]{0.129,0.129,0.129}{0.3159 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0977 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.3576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.3388}                                                                       & 20                                                                                                              \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{InceptionV3}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/inception1loss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/inception1acc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+\hline
+DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2-reg                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0883 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9683 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1494 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9569}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V3                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0089 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9964 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0924 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9826}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9736}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet                                              & \textcolor[rgb]{0.129,0.129,0.129}{0.2519 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9063 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2134 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9236}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8805}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet-FT                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0102 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9952 } & \textcolor[rgb]{0.129,0.129,0.129}{0.5594 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.8576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8736}                                                                       & 20                                                                                                              \\ 
+\hline
+VGG16                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.1057 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9626 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1063 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9375}                                                                       & 20                                                                                                              \\ 
+\hline
+VGG16-FT                                            & \textcolor[rgb]{0.129,0.129,0.129}{1.099}   & \textcolor[rgb]{0.129,0.129,0.129}{0.3159 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0977 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.3576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.3388}                                                                       & 20                                                                                                              \\ 
+\hline
+\rowcolor{green} InceptionV3                        & \textcolor[rgb]{0.129,0.129,0.129}{0.2194 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9231 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2337 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9201}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8903}                                                                       & 20                                                                                                              \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/inception2loss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/inception2acc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+\hline
+DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2-reg                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0883 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9683 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1494 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9569}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V3                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0089 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9964 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0924 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9826}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9736}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet                                              & \textcolor[rgb]{0.129,0.129,0.129}{0.2519 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9063 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2134 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9236}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8805}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet-FT                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0102 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9952 } & \textcolor[rgb]{0.129,0.129,0.129}{0.5594 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.8576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8736}                                                                       & 20                                                                                                              \\ 
+\hline
+VGG16                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.1057 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9626 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1063 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9375}                                                                       & 20                                                                                                              \\ 
+\hline
+VGG16-FT                                            & \textcolor[rgb]{0.129,0.129,0.129}{1.099}   & \textcolor[rgb]{0.129,0.129,0.129}{0.3159 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0977 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.3576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.3388}                                                                       & 20                                                                                                              \\ 
+\hline
+InceptionV3                                         & \textcolor[rgb]{0.129,0.129,0.129}{0.2194 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9231 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2337 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9201}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8903}                                                                       & 20                                                                                                              \\ 
+\hline
+\rowcolor{green} InceptionV3-FT                                      & \textcolor[rgb]{0.129,0.129,0.129}{0.0146 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9953 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1142 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9688}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9792}                                                                       & 20                                                                                                              \\ 
+\hline
+
+\end{tabular}
+\end{table}
 
 \subsection{Xception}
 
 
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/xception1loss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/xception1acc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+\hline
+DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2-reg                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0883 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9683 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1494 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9569}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V3                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0089 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9964 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0924 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9826}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9736}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet                                              & \textcolor[rgb]{0.129,0.129,0.129}{0.2519 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9063 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2134 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9236}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8805}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet-FT                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0102 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9952 } & \textcolor[rgb]{0.129,0.129,0.129}{0.5594 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.8576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8736}                                                                       & 20                                                                                                              \\ 
+\hline
+VGG16                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.1057 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9626 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1063 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9375}                                                                       & 20                                                                                                              \\ 
+\hline
+VGG16-FT                                            & \textcolor[rgb]{0.129,0.129,0.129}{1.099}   & \textcolor[rgb]{0.129,0.129,0.129}{0.3159 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0977 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.3576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.3388}                                                                       & 20                                                                                                              \\ 
+\hline
+InceptionV3                                         & \textcolor[rgb]{0.129,0.129,0.129}{0.2194 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9231 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2337 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9201}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8903}                                                                       & 20                                                                                                              \\ 
+\hline
+InceptionV3-FT                                      & \textcolor[rgb]{0.129,0.129,0.129}{0.0146 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9953 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1142 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9688}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9792}                                                                       & 20                                                                                                              \\ 
+\hline
+\rowcolor{green} Xception                           & \textcolor[rgb]{0.129,0.129,0.129}{0.1746 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9405 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1319 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9153}                                                                       & 20                                                                                                              \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/xception2aloss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/xception2acc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\ 
+\hline
+DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V2-reg                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0883 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9683 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1494 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9569}                                                                       & 20                                                                                                              \\ 
+\hline
+DN-V3                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0089 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9964 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0924 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9826}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9736}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet                                              & \textcolor[rgb]{0.129,0.129,0.129}{0.2519 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9063 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2134 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9236}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8805}                                                                       & 20                                                                                                              \\ 
+\hline
+ResNet-FT                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0102 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9952 } & \textcolor[rgb]{0.129,0.129,0.129}{0.5594 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.8576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8736}                                                                       & 20                                                                                                              \\ 
+\hline
+VGG16                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.1057 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9626 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1063 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9375}                                                                       & 20                                                                                                              \\ 
+\hline
+VGG16-FT                                            & \textcolor[rgb]{0.129,0.129,0.129}{1.099}   & \textcolor[rgb]{0.129,0.129,0.129}{0.3159 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0977 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.3576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.3388}                                                                       & 20                                                                                                              \\ 
+\hline
+InceptionV3                                         & \textcolor[rgb]{0.129,0.129,0.129}{0.2194 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9231 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2337 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9201}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8903}                                                                       & 20                                                                                                              \\ 
+\hline
+InceptionV3-FT                                      & \textcolor[rgb]{0.129,0.129,0.129}{0.0146 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9953 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1142 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9688}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9792}                                                                       & 20                                                                                                              \\ 
+\hline
+Xception                                            & \textcolor[rgb]{0.129,0.129,0.129}{0.1746 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9405 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1319 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9153}                                                                       & 20                                                                                                              \\ 
+\hline
+\rowcolor{green} Xception-FT                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0157 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9946 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0352 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9861}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9875}                                                                       & 20                                                                                                              \\
+\hline
+\end{tabular}
+\end{table}
+
 \section{Análisis del modelo: mapas de activación, mapas de calor y conclusiones}
 
+
+
 \section{Posibles propuestas de mejora}
+
+
+\section{Referencias}
+
+https://www.kaggle.com/tawsifurrahman/covid19-radiography-database
 
 
 
