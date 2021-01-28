@@ -279,7 +279,7 @@ Los resultados los podemos observar en la siguiente tabla:
 \end{tabular}
 \end{table}
 
-La matriz de dispersión de la clasificación ha sido la siguiente:
+La matriz de confusión de la clasificación ha sido la siguiente:
 
 \begin{table}[htpb]
 \begin{center}
@@ -331,6 +331,21 @@ hist = dense_model.fit(car_train, y_train, batch_size=32, epochs=20, validation_
 \hline
 
 \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 231                                      & 1                                         & 3                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 6                                        & 135                                       & 103                                     \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 5                                        & 0                                         & 236                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
 \end{table}
 
 \subsubsection{Version 2: Data augmentation, más capas densas}
@@ -405,6 +420,23 @@ DN-V1                                               & \textcolor[rgb]{0.129,0.12
 \end{table}
 
 
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 230                                      & 3                                         & 2                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 1                                        & 238                                       & 5                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 1                                        & 17                                        & 223                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
 En esta última versión puede ser que tengamos un poco de overfitting puesto que el validation loss no decrece al mismo ritmo que el training loss. Regularizamos añadiendo una capa de Dropout.
 
 \begin{lstlisting}
@@ -448,6 +480,21 @@ DN-V2                                               & \textcolor[rgb]{0.129,0.12
 \end{tabular}
 \end{table}
 
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 226                                      & 2                                         & 7                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 0                                        & 233                                       & 11                                      \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 0                                        & 11                                        & 230                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
+\end{table}
+
 \subsubsection{Version 3: Fine tunning}
 
 Vamos a probar ahora a hacer un ajuste fino de la red completa, tomando como pesos iniciales los de imagenet. Ahora ya no solo vamos a utilizar DenseNet como extractor de características, sino que, en vez de estar la red congelada, vamos a ir moviendo sus pesos con el entrenamiento.
@@ -485,6 +532,23 @@ DN-V2-reg                                           & \textcolor[rgb]{0.129,0.12
 
 \end{tabular}
 \end{table}
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 235                                      & 0                                         & 0                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 0                                        & 230                                       & 14                                      \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 4                                        & 1                                         & 236                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
+\end{table}
+
+
 
 \subsection{ResNet50}
 
@@ -527,6 +591,22 @@ DN-V3                                               & \textcolor[rgb]{0.129,0.12
 \end{tabular}
 \end{table}
 
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 234                                      & 1                                         & 0                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 15                                       & 219                                       & 10                                      \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 46                                       & 14                                        & 181                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
+\end{table}
+
 \begin{figure}[H]
   \centering
   \begin{minipage}[b]{0.45\textwidth}
@@ -563,6 +643,22 @@ ResNet                                              & \textcolor[rgb]{0.129,0.12
 
 
 \end{tabular}
+\end{table}
+
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 173                                      & 0                                         & 62                                      \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 2                                        & 220                                       & 22                                      \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 0                                        & 5                                         & 236                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
 \end{table}
 
 
@@ -607,6 +703,22 @@ ResNet-FT                                           & \textcolor[rgb]{0.129,0.12
 \end{tabular}
 \end{table}
 
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 234                                      & 0                                         & 1                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 2                                        & 232                                       & 10                                      \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 8                                        & 24                                        & 209                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
+\end{table}
+
+
 \begin{figure}[H]
   \centering
   \begin{minipage}[b]{0.45\textwidth}
@@ -645,6 +757,21 @@ VGG16                                               & \textcolor[rgb]{0.129,0.12
 \rowcolor{green} VGG16-FT                           & \textcolor[rgb]{0.129,0.129,0.129}{1.099}   & \textcolor[rgb]{0.129,0.129,0.129}{0.3159 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0977 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.3576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.3388}                                                                       & 20                                                                                                              \\
 \hline
 \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 0                                        & 235                                       & 0                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 0                                        & 244                                       & 0                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 0                                        & 241                                       & 0                                       \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
 \end{table}
 
 \subsection{InceptionV3}
@@ -691,6 +818,21 @@ VGG16-FT                                            & \textcolor[rgb]{0.129,0.12
 \end{tabular}
 \end{table}
 
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 224                                      & 4                                         & 7                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 17                                       & 210                                       & 17                                      \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 11                                       & 23                                        & 207                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
+\end{table}
+
 \begin{figure}[H]
   \centering
   \begin{minipage}[b]{0.45\textwidth}
@@ -734,6 +876,21 @@ InceptionV3                                         & \textcolor[rgb]{0.129,0.12
 \hline
 
 \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 233                                      & 1                                         & 1                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 0                                        & 243                                       & 1                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 1                                        & 11                                        & 229                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
 \end{table}
 
 \subsection{Xception}
@@ -785,6 +942,20 @@ InceptionV3-FT                                      & \textcolor[rgb]{0.129,0.12
 \end{tabular}
 \end{table}
 
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 231                                      & 2                                         & 2                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 2                                        & 223                                       & 19                                      \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 8                                        & 28                                        & 205                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
+\end{table}
 
 \begin{figure}[H]
   \centering
@@ -833,6 +1004,23 @@ Xception                                            & \textcolor[rgb]{0.129,0.12
 \hline
 \end{tabular}
 \end{table}
+
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 234                                      & 0                                         & 1                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 0                                        & 244                                       & 0                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 0                                        & 8                                         & 233                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
+\end{table}
+
 
 \section{Análisis del modelo: mapas de activación, mapas de calor y conclusiones}
 
