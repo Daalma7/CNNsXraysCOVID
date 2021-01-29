@@ -1122,7 +1122,6 @@ La red que decidimos usar fue una red que desarrolló David para el bonus de la 
 
 \end{figure}
 
-Los resultados han sido los siguientes:
 
 \begin{figure}[H]
   \centering
@@ -1169,20 +1168,145 @@ Xception-EC                                            & \textcolor[rgb]{0.129,0
 \hline
 Xception-FT                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0157 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9946 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0352 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9861}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9875}                                                                       & 20                                                                                                              \\
 \hline
-\rowcolor{green} CNN from scratch                        & \textcolor[rgb]{0.129,0.129,0.129}{1.0993  } & \textcolor[rgb]{0.129,0.129,0.129}{0.3233  } & \textcolor[rgb]{0.129,0.129,0.129}{1.0983 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.3576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.3388}                                                                       & 20                                                                                                              \\
+\rowcolor{green} Red David                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0416 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9829 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0983 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.1420 }                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9139}                                                                       & 20                                                                                                              \\
 \hline
 \end{tabular}
 \caption{Resultados de la ejecución para la red CNN from scratch, mostrando los anteriores}
 
 \end{table}
 
-Los resultados son decentes\\
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 229                                         & 0                                        & 6                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 3                                        & 199                                       & 42                                      \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 10                                        & 1                                        & 230                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
+\end{tabular}
+\end{center}
+\caption{Matriz de confusión para la red de David}
+\end{table}
+
+Los resultados son muy malos, al nivel de los que hacen una predicción constante.  Entendemos que ha ocurrido esto debido a la gran cantidad de pesos a entrenar y al poco número de imágenes que hay en entrenamiento.  Hemos probado a modificar el learning rate de la red para que intentara aprender más rápido, pero aun así tras la primera época,  siempre se mantiene en valores tanto de función de pérdida como de accuracy constantes e iguales a los de las predicciones constantes. Por lo tanto, vemos que entrenar una red from scratch bajo estas condiciones es bastante inviable.\\
 
 Hemos decidido tras ver esto que quizás sería mejor utilizar una red más simple, con menos parámetros.  Es por ello que hemos entrenado también una red más simple, que es la red que Alberto usó para su bonus de la Práctica 2. Esta red también consiguió buenos resultados,  y pensamos que tendrá bastante mejor capacidad de adaptación.
 
 \subsubsection{Segunda Versión: Red más simple}
 
-INCLUIR AQUÍ LO DE ALBERTO
+Esta red es la red diseñada por Alberto para el bonus 1 de la práctica 2. Es un modelo secuencial más simple que el de David, y que contiene un menor número de parámetros.
+
+La red está formada por las siguientes capas:
+
+\begin{lstlisting}
+
+    modelo_bonus = Sequential()
+    modelo_bonus.add(Conv2D(60, (3, 3), padding='same', kernel_initializer='orthogonal', input_shape=(224,224,3)))
+    modelo_bonus.add(LeakyReLU(alpha=0.1))
+    modelo_bonus.add(BatchNormalization(renorm=True))
+    modelo_bonus.add(Conv2D(60, (3, 3), padding='same', kernel_initializer='orthogonal'))
+    modelo_bonus.add(LeakyReLU(alpha=0.1))
+    modelo_bonus.add(BatchNormalization(renorm=True))
+    modelo_bonus.add(MaxPooling2D(pool_size=(2, 2)))
+    modelo_bonus.add(Dropout(0.25))
+    modelo_bonus.add(Conv2D(120, (3, 3), kernel_initializer='orthogonal'))
+    modelo_bonus.add(LeakyReLU(alpha=0.1))
+    modelo_bonus.add(BatchNormalization(renorm=True))
+    modelo_bonus.add(Conv2D(120, (3, 3), kernel_initializer='orthogonal'))
+    modelo_bonus.add(LeakyReLU(alpha=0.1))
+    modelo_bonus.add(BatchNormalization(renorm=True))
+    modelo_bonus.add(MaxPooling2D(pool_size=(2, 2)))
+    modelo_bonus.add(Dropout(0.25))
+    modelo_bonus.add(Flatten())
+    modelo_bonus.add(Dense(600, kernel_initializer='orthogonal'))
+    modelo_bonus.add(LeakyReLU(alpha=0.1))
+    modelo_bonus.add(BatchNormalization(renorm=True))
+    modelo_bonus.add(Dropout(0.5))
+    modelo_bonus.add(Dense(3, activation='softmax'))
+
+\end{lstlisting}
+
+Para tener unos mejores resultados hemos mantenido los parámetros y la estructura con la que fue ejecutado en su momento, incluyendo la parada por early stopping.\\
+
+El modelo se ha entrenado durante 8 épocas con los siguientes resultados:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\
+\hline
+DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\
+\hline
+DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\
+\hline
+DN-V2-reg                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0883 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9683 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1494 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9569}                                                                       & 20                                                                                                              \\
+\hline
+DN-V3                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0089 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9964 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0924 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9826}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9736}                                                                       & 20                                                                                                              \\
+\hline
+ResNet-EC                                              & \textcolor[rgb]{0.129,0.129,0.129}{0.2519 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9063 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2134 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9236}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8805}                                                                       & 20                                                                                                              \\
+\hline
+ResNet-FT                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0102 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9952 } & \textcolor[rgb]{0.129,0.129,0.129}{0.5594 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.8576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8736}                                                                       & 20                                                                                                              \\
+\hline
+VGG16-EC                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.1057 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9626 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1063 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9375}                                                                       & 20                                                                                                              \\
+\hline
+VGG16-FT                                            & \textcolor[rgb]{0.129,0.129,0.129}{1.099}   & \textcolor[rgb]{0.129,0.129,0.129}{0.3159 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0977 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.3576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.3388}                                                                       & 20                                                                                                              \\
+\hline
+InceptionV3-EC                                         & \textcolor[rgb]{0.129,0.129,0.129}{0.2194 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9231 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2337 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9201}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8903}                                                                       & 20                                                                                                              \\
+\hline
+InceptionV3-FT                                      & \textcolor[rgb]{0.129,0.129,0.129}{0.0146 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9953 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1142 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9688}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9792}                                                                       & 20                                                                                                              \\
+\hline
+Xception-EC                                            & \textcolor[rgb]{0.129,0.129,0.129}{0.1746 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9405 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1319 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9153}                                                                       & 20                                                                                                              \\
+\hline
+Xception-FT                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0157 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9946 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0352 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9861}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9875}                                                                       & 20                                                                                                              \\
+\hline
+Red David                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0416 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9829 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0983 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.1420 }                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9139}                                                                       & 20                                                                                                              \\
+\hline
+\rowcolor{green} Red Alberto                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3538  } & \textcolor[rgb]{0.129,0.129,0.129}{0.9125  } & \textcolor[rgb]{0.129,0.129,0.129}{0.5054}                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9028}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9388}                                                                       & 8                                                                                                              \\
+\hline
+
+\end{tabular}
+\caption{Resultados de la ejecución para la red CNN from scratch de Alberto, mostrando los anteriores}
+\end{table}
+
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/albertoloss}
+	\caption{Training-Validation Loss}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[scale=0.75]{./images/albertoacc}
+	\caption{Training-Validation accuracy}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 222                                         & 7                                        & 6                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 1                                        & 233                                       & 10                                      \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 5                                        & 15                                        & 221                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
+\end{tabular}
+\end{center}
+\caption{Matriz de confusión para la red de Alberto}
+\end{table}
+
+Los resultados son bastnate similares al modelo de David, y están bastante bien para tratarse de un modelo más simple.\\
+
+Después de haber probado estos modelos podemos llegar a la conclusión de que no es necesario utilizar forzosamente un modelo preentrenado para afrontar este problema, ya que conseguimos unos resultados interesantes desde un enfoque más simple. No obstante, para obtener el mejor modelo posible sí que es recomendable usar modelos preentrenados, como hemos visto con DenseNet o Xception.
 
 \section{Análisis del modelo: mapas de activación, mapas de calor y conclusiones}
 
