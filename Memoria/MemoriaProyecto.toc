@@ -27,11 +27,11 @@
 \contentsline {subsection}{\numberline {4.6}Entrenamiento de una red desde 0}{21}{subsection.4.6}%
 \contentsline {subsubsection}{\numberline {4.6.1}Primera Versión: Red más compleja}{21}{subsubsection.4.6.1}%
 \contentsline {subsubsection}{\numberline {4.6.2}Segunda Versión: Red más simple}{23}{subsubsection.4.6.2}%
-\contentsline {section}{\numberline {5}Análisis del modelo: mapas de activación, mapas de calor y conclusiones}{23}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Mapas de activación}{24}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Mapas de calor}{24}{subsection.5.2}%
-\contentsline {subsubsection}{\numberline {5.2.1}Mapas de calor para ResNet-EC}{25}{subsubsection.5.2.1}%
-\contentsline {subsubsection}{\numberline {5.2.2}Mapas de calor para Xception-FT}{27}{subsubsection.5.2.2}%
-\contentsline {subsubsection}{\numberline {5.2.3}Conclusiones}{28}{subsubsection.5.2.3}%
-\contentsline {section}{\numberline {6}Posibles propuestas de mejora}{28}{section.6}%
-\contentsline {section}{Referencias}{30}{section*.43}%
+\contentsline {section}{\numberline {5}Análisis del modelo: mapas de activación, mapas de calor y conclusiones}{25}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Mapas de activación}{25}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Mapas de calor}{29}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Mapas de calor para ResNet-EC}{30}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Mapas de calor para Xception-FT}{32}{subsubsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.3}Conclusiones}{33}{subsubsection.5.2.3}%
+\contentsline {section}{\numberline {6}Posibles propuestas de mejora}{33}{section.6}%
+\contentsline {section}{Referencias}{35}{section*.50}%
