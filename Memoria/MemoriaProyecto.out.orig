@@ -1,0 +1,40 @@
+\BOOKMARK [1][-]{section.1}{Descripci\363n del proyecto}{}% 1
+\BOOKMARK [1][-]{section.2}{An\341lisis previo del problema}{}% 2
+\BOOKMARK [1][-]{section.3}{Base de Datos elegida para el problema}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Informaci\363n de la Base de Datos}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Lectura de la Base de Datos}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{Creaci\363n de los conjuntos de train y test}{section.3}% 6
+\BOOKMARK [1][-]{section.4}{Implementaci\363n de los modelos}{}% 7
+\BOOKMARK [2][-]{subsection.4.1}{DenseNet121}{section.4}% 8
+\BOOKMARK [3][-]{subsubsection.4.1.1}{Version 0: Extractor de caracter\355sticas inicial, sin entrenamiento}{subsection.4.1}% 9
+\BOOKMARK [3][-]{subsubsection.4.1.2}{Version 1: Extractor de caracter\355sticas inicial, entrenando la capa de salida}{subsection.4.1}% 10
+\BOOKMARK [3][-]{subsubsection.4.1.3}{Version 2: Data augmentation, m\341s capas densas}{subsection.4.1}% 11
+\BOOKMARK [3][-]{subsubsection.4.1.4}{Version 3: Fine tunning}{subsection.4.1}% 12
+\BOOKMARK [3][-]{subsubsection.4.1.5}{Modificaciones a aplicar a las siguientes redes}{subsection.4.1}% 13
+\BOOKMARK [2][-]{subsection.4.2}{ResNet50}{section.4}% 14
+\BOOKMARK [3][-]{subsubsection.4.2.1}{ResNet-EC}{subsection.4.2}% 15
+\BOOKMARK [3][-]{subsubsection.4.2.2}{ResNet-FT}{subsection.4.2}% 16
+\BOOKMARK [2][-]{subsection.4.3}{VGG16}{section.4}% 17
+\BOOKMARK [3][-]{subsubsection.4.3.1}{VGG16-EC}{subsection.4.3}% 18
+\BOOKMARK [3][-]{subsubsection.4.3.2}{VGG16-FT}{subsection.4.3}% 19
+\BOOKMARK [2][-]{subsection.4.4}{InceptionV3}{section.4}% 20
+\BOOKMARK [3][-]{subsubsection.4.4.1}{InceptionV3-EC}{subsection.4.4}% 21
+\BOOKMARK [3][-]{subsubsection.4.4.2}{InceptionV3-FT}{subsection.4.4}% 22
+\BOOKMARK [2][-]{subsection.4.5}{Xception}{section.4}% 23
+\BOOKMARK [3][-]{subsubsection.4.5.1}{Xception-EC}{subsection.4.5}% 24
+\BOOKMARK [3][-]{subsubsection.4.5.2}{Xception-FT}{subsection.4.5}% 25
+\BOOKMARK [2][-]{subsection.4.6}{Entrenamiento de una red desde 0}{section.4}% 26
+\BOOKMARK [3][-]{subsubsection.4.6.1}{Primera Versi\363n: Red m\341s compleja}{subsection.4.6}% 27
+\BOOKMARK [3][-]{subsubsection.4.6.2}{Segunda Versi\363n: Red m\341s simple}{subsection.4.6}% 28
+\BOOKMARK [1][-]{section.5}{An\341lisis del modelo: mapas de activaci\363n, mapas de calor y conclusiones}{}% 29
+\BOOKMARK [2][-]{subsection.5.1}{Mapas de activaci\363n}{section.5}% 30
+\BOOKMARK [2][-]{subsection.5.2}{Mapas de calor}{section.5}% 31
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Mapas de calor para ResNet-EC}{subsection.5.2}% 32
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Mapas de calor para Xception-FT}{subsection.5.2}% 33
+\BOOKMARK [3][-]{subsubsection.5.2.3}{Conclusiones}{subsection.5.2}% 34
+\BOOKMARK [1][-]{section.6}{Posibles propuestas de mejora}{}% 35
+<<<<<<< HEAD
+\BOOKMARK [1][-]{section*.44}{Referencias}{}% 36
+=======
+\BOOKMARK [1][-]{section*.52}{Referencias}{}% 36
+>>>>>>> 744cc0beb8c1f1d766fce78fd8aa67863730a43b

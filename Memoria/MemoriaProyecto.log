@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.9)  29 JAN 2021 16:38
-=======
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.8.6)  29 JAN 2021 16:47
->>>>>>> 744cc0beb8c1f1d766fce78fd8aa67863730a43b
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.9)  29 JAN 2021 20:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -702,7 +698,7 @@ LaTeX Info: Redefining \nameref on input line 63.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<./images/exp.jpg, id=148, 803.0pt x 798.985pt>
+<./images/exp.jpg, id=140, 803.0pt x 798.985pt>
 File: ./images/exp.jpg Graphic file (type jpg)
 <use ./images/exp.jpg>
 Package pdftex.def Info: ./images/exp.jpg  used on input line 66.
@@ -861,7 +857,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 160--161
 
  []
 
-<./images/ejemploCOVID.png, id=238, 193.9245pt x 196.93575pt>
+<./images/ejemploCOVID.png, id=228, 193.9245pt x 196.93575pt>
 File: ./images/ejemploCOVID.png Graphic file (type png)
 <use ./images/ejemploCOVID.png>
 Package pdftex.def Info: ./images/ejemploCOVID.png  used on input line 179.
@@ -871,7 +867,7 @@ Overfull \hbox (12.80745pt too wide) in paragraph at lines 179--180
 [][] 
  []
 
-<./images/ejemploNEUMONIAVIRICA.png, id=240, 193.9245pt x 196.3335pt>
+<./images/ejemploNEUMONIAVIRICA.png, id=230, 193.9245pt x 196.3335pt>
 File: ./images/ejemploNEUMONIAVIRICA.png Graphic file (type png)
 <use ./images/ejemploNEUMONIAVIRICA.png>
 Package pdftex.def Info: ./images/ejemploNEUMONIAVIRICA.png  used on input line
@@ -882,7 +878,7 @@ Overfull \hbox (12.80745pt too wide) in paragraph at lines 184--185
 [][] 
  []
 
-<./images/ejemploNORMAL.png, id=241, 196.3335pt x 199.34476pt>
+<./images/ejemploNORMAL.png, id=231, 196.3335pt x 199.34476pt>
 File: ./images/ejemploNORMAL.png Graphic file (type png)
 <use ./images/ejemploNORMAL.png>
 Package pdftex.def Info: ./images/ejemploNORMAL.png  used on input line 189.
@@ -924,7 +920,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 244--245
  []
 
 [7]
-<./images/v1loss.png, id=292, 277.63725pt x 187.902pt>
+<./images/v1loss.png, id=282, 277.63725pt x 187.902pt>
 File: ./images/v1loss.png Graphic file (type png)
 <use ./images/v1loss.png>
 Package pdftex.def Info: ./images/v1loss.png  used on input line 315.
@@ -934,7 +930,7 @@ Overfull \hbox (4.39325pt too wide) in paragraph at lines 315--316
 [][] 
  []
 
-<./images/v1acc.png, id=293, 278.2395pt x 187.29974pt>
+<./images/v1acc.png, id=283, 278.2395pt x 187.29974pt>
 File: ./images/v1acc.png Graphic file (type png)
 <use ./images/v1acc.png>
 Package pdftex.def Info: ./images/v1acc.png  used on input line 320.
@@ -960,7 +956,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 363--364
  []
 
 [9 <./images/v1loss.png> <./images/v1acc.png>]
-<./images/v2loss.png, id=328, 284.86424pt x 186.6975pt>
+<./images/v2loss.png, id=318, 284.86424pt x 186.6975pt>
 File: ./images/v2loss.png Graphic file (type png)
 <use ./images/v2loss.png>
 Package pdftex.def Info: ./images/v2loss.png  used on input line 400.
@@ -970,7 +966,7 @@ Overfull \hbox (9.81348pt too wide) in paragraph at lines 400--401
 [][] 
  []
 
-<./images/v2acc.png, id=329, 281.25075pt x 188.50426pt>
+<./images/v2acc.png, id=319, 281.25075pt x 188.50426pt>
 File: ./images/v2acc.png Graphic file (type png)
 <use ./images/v2acc.png>
 Package pdftex.def Info: ./images/v2acc.png  used on input line 405.
@@ -986,7 +982,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 447--448
  []
 
 [10 <./images/v2loss.png> <./images/v2acc.png>]
-<./images/v2-2loss.png, id=360, 284.86424pt x 187.902pt>
+<./images/v2-2loss.png, id=350, 284.86424pt x 187.902pt>
 File: ./images/v2-2loss.png Graphic file (type png)
 <use ./images/v2-2loss.png>
 Package pdftex.def Info: ./images/v2-2loss.png  used on input line 462.
@@ -996,7 +992,7 @@ Overfull \hbox (9.81348pt too wide) in paragraph at lines 462--463
 [][] 
  []
 
-<./images/v2-2acc.png, id=361, 283.0575pt x 186.6975pt>
+<./images/v2-2acc.png, id=351, 283.0575pt x 186.6975pt>
 File: ./images/v2-2acc.png Graphic file (type png)
 <use ./images/v2-2acc.png>
 Package pdftex.def Info: ./images/v2-2acc.png  used on input line 467.
@@ -1016,12 +1012,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 513--514
 
  []
 
-<./images/v3loss.png, id=378, 271.0125pt x 187.29974pt>
+<./images/v3loss.png, id=368, 271.0125pt x 187.29974pt>
 File: ./images/v3loss.png Graphic file (type png)
 <use ./images/v3loss.png>
 Package pdftex.def Info: ./images/v3loss.png  used on input line 526.
 (pdftex.def)             Requested size: 203.25887pt x 140.47444pt.
-<./images/v3acc.png, id=379, 284.86424pt x 188.50426pt>
+<./images/v3acc.png, id=369, 284.86424pt x 188.50426pt>
 File: ./images/v3acc.png Graphic file (type png)
 <use ./images/v3acc.png>
 Package pdftex.def Info: ./images/v3acc.png  used on input line 531.
@@ -1037,7 +1033,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 574--575
  []
 
 [12 <./images/v3loss.png> <./images/v3acc.png>]
-<./images/resnet1loss.png, id=391, 278.84175pt x 187.29974pt>
+<./images/resnet1loss.png, id=381, 278.84175pt x 187.29974pt>
 File: ./images/resnet1loss.png Graphic file (type png)
 <use ./images/resnet1loss.png>
 Package pdftex.def Info: ./images/resnet1loss.png  used on input line 594.
@@ -1047,7 +1043,7 @@ Overfull \hbox (5.29662pt too wide) in paragraph at lines 594--595
 [][] 
  []
 
-<./images/resnet1acc.png, id=392, 286.671pt x 190.91325pt>
+<./images/resnet1acc.png, id=382, 286.671pt x 190.91325pt>
 File: ./images/resnet1acc.png Graphic file (type png)
 <use ./images/resnet1acc.png>
 Package pdftex.def Info: ./images/resnet1acc.png  used on input line 599.
@@ -1063,7 +1059,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 648--649
  []
 
 [13 <./images/resnet1loss.png> <./images/resnet1acc.png>]
-<./images/resnet2loss.png, id=402, 283.65974pt x 190.91325pt>
+<./images/resnet2loss.png, id=392, 283.65974pt x 190.91325pt>
 File: ./images/resnet2loss.png Graphic file (type png)
 <use ./images/resnet2loss.png>
 Package pdftex.def Info: ./images/resnet2loss.png  used on input line 656.
@@ -1073,7 +1069,7 @@ Overfull \hbox (8.91011pt too wide) in paragraph at lines 656--657
 [][] 
  []
 
-<./images/resnet2acc.png, id=403, 284.262pt x 190.311pt>
+<./images/resnet2acc.png, id=393, 284.262pt x 190.311pt>
 File: ./images/resnet2acc.png Graphic file (type png)
 <use ./images/resnet2acc.png>
 Package pdftex.def Info: ./images/resnet2acc.png  used on input line 661.
@@ -1084,7 +1080,7 @@ Overfull \hbox (9.3618pt too wide) in paragraph at lines 661--662
  []
 
 [14 <./images/resnet2loss.png> <./images/resnet2acc.png>]
-<./images/vggloss.png, id=414, 284.86424pt x 185.493pt>
+<./images/vggloss.png, id=404, 284.86424pt x 185.493pt>
 File: ./images/vggloss.png Graphic file (type png)
 <use ./images/vggloss.png>
 Package pdftex.def Info: ./images/vggloss.png  used on input line 719.
@@ -1094,7 +1090,7 @@ Overfull \hbox (9.81348pt too wide) in paragraph at lines 719--720
 [][] 
  []
 
-<./images/vggacc.png, id=415, 281.25075pt x 188.50426pt>
+<./images/vggacc.png, id=405, 281.25075pt x 188.50426pt>
 File: ./images/vggacc.png Graphic file (type png)
 <use ./images/vggacc.png>
 Package pdftex.def Info: ./images/vggacc.png  used on input line 724.
@@ -1104,7 +1100,7 @@ Overfull \hbox (7.10336pt too wide) in paragraph at lines 724--725
 [][] 
  []
 
-<./images/vgg2loss.png, id=416, 290.2845pt x 186.6975pt>
+<./images/vgg2loss.png, id=406, 290.2845pt x 186.6975pt>
 File: ./images/vgg2loss.png Graphic file (type png)
 <use ./images/vgg2loss.png>
 Package pdftex.def Info: ./images/vgg2loss.png  used on input line 779.
@@ -1114,7 +1110,7 @@ Overfull \hbox (13.87866pt too wide) in paragraph at lines 779--780
 [][] 
  []
 
-<./images/vgg2acc.png, id=417, 284.262pt x 189.70876pt>
+<./images/vgg2acc.png, id=407, 284.262pt x 189.70876pt>
 File: ./images/vgg2acc.png Graphic file (type png)
 <use ./images/vgg2acc.png>
 Package pdftex.def Info: ./images/vgg2acc.png  used on input line 784.
@@ -1129,7 +1125,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 833--834
 
  []
 
-<./images/inception1loss.png, id=427, 280.6485pt x 185.493pt>
+<./images/inception1loss.png, id=417, 280.6485pt x 185.493pt>
 File: ./images/inception1loss.png Graphic file (type png)
 <use ./images/inception1loss.png>
 Package pdftex.def Info: ./images/inception1loss.png  used on input line 844.
@@ -1139,7 +1135,7 @@ Overfull \hbox (6.65169pt too wide) in paragraph at lines 844--845
 [][] 
  []
 
-<./images/inception1acc.png, id=428, 286.06876pt x 187.29974pt>
+<./images/inception1acc.png, id=418, 286.06876pt x 187.29974pt>
 File: ./images/inception1acc.png Graphic file (type png)
 <use ./images/inception1acc.png>
 Package pdftex.def Info: ./images/inception1acc.png  used on input line 849.
@@ -1159,7 +1155,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 902--903
 
  []
 
-<./images/inception2loss.png, id=438, 287.27325pt x 188.50426pt>
+<./images/inception2loss.png, id=428, 287.27325pt x 188.50426pt>
 File: ./images/inception2loss.png Graphic file (type png)
 <use ./images/inception2loss.png>
 Package pdftex.def Info: ./images/inception2loss.png  used on input line 909.
@@ -1169,7 +1165,7 @@ Overfull \hbox (11.62024pt too wide) in paragraph at lines 909--910
 [][] 
  []
 
-<./images/inception2acc.png, id=439, 287.27325pt x 193.9245pt>
+<./images/inception2acc.png, id=429, 287.27325pt x 193.9245pt>
 File: ./images/inception2acc.png Graphic file (type png)
 <use ./images/inception2acc.png>
 Package pdftex.def Info: ./images/inception2acc.png  used on input line 914.
@@ -1184,7 +1180,7 @@ Overfull \hbox (10.15762pt too wide) in paragraph at lines 921--949
  [][] 
  []
 
-<./images/xception1loss.png, id=450, 281.25075pt x 190.311pt>
+<./images/xception1loss.png, id=439, 281.25075pt x 190.311pt>
 File: ./images/xception1loss.png Graphic file (type png)
 <use ./images/xception1loss.png>
 Package pdftex.def Info: ./images/xception1loss.png  used on input line 977.
@@ -1194,7 +1190,7 @@ Overfull \hbox (7.10336pt too wide) in paragraph at lines 977--978
 [][] 
  []
 
-<./images/xception1acc.png, id=451, 283.0575pt x 187.902pt>
+<./images/xception1acc.png, id=440, 283.0575pt x 187.902pt>
 File: ./images/xception1acc.png Graphic file (type png)
 <use ./images/xception1acc.png>
 Package pdftex.def Info: ./images/xception1acc.png  used on input line 982.
@@ -1214,7 +1210,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1037--1038
 
  []
 
-<./images/xception2aloss.png, id=462, 292.6935pt x 185.493pt>
+<./images/xception2aloss.png, id=452, 292.6935pt x 185.493pt>
 File: ./images/xception2aloss.png Graphic file (type png)
 <use ./images/xception2aloss.png>
 Package pdftex.def Info: ./images/xception2aloss.png  used on input line 1044.
@@ -1224,7 +1220,7 @@ Overfull \hbox (15.68541pt too wide) in paragraph at lines 1044--1045
 [][] 
  []
 
-<./images/xception2acc.png, id=463, 284.262pt x 190.91325pt>
+<./images/xception2acc.png, id=453, 284.262pt x 190.91325pt>
 File: ./images/xception2acc.png Graphic file (type png)
 <use ./images/xception2acc.png>
 Package pdftex.def Info: ./images/xception2acc.png  used on input line 1049.
@@ -1250,7 +1246,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1114--1115
  []
 
 [20 <./images/xception2aloss.png> <./images/xception2acc.png>]
-<./images/ScratchDavid.png, id=482, 877.2775pt x 1289.81876pt>
+<./images/ScratchDavid.png, id=472, 877.2775pt x 1289.81876pt>
 File: ./images/ScratchDavid.png Graphic file (type png)
 <use ./images/ScratchDavid.png>
 Package pdftex.def Info: ./images/ScratchDavid.png  used on input line 1120.
@@ -1258,185 +1254,142 @@ Package pdftex.def Info: ./images/ScratchDavid.png  used on input line 1120.
  [21]
 File: ./images/xception2aloss.png Graphic file (type png)
 <use ./images/xception2aloss.png>
-Package pdftex.def Info: ./images/xception2aloss.png  used on input line 1130.
+Package pdftex.def Info: ./images/xception2aloss.png  used on input line 1129.
 (pdftex.def)             Requested size: 219.51958pt x 139.1194pt.
 
-Overfull \hbox (15.68541pt too wide) in paragraph at lines 1130--1131
+Overfull \hbox (15.68541pt too wide) in paragraph at lines 1129--1130
 [][] 
  []
 
 File: ./images/xception2acc.png Graphic file (type png)
 <use ./images/xception2acc.png>
-Package pdftex.def Info: ./images/xception2acc.png  used on input line 1135.
+Package pdftex.def Info: ./images/xception2acc.png  used on input line 1134.
 (pdftex.def)             Requested size: 213.19597pt x 143.18459pt.
 
-Overfull \hbox (9.3618pt too wide) in paragraph at lines 1135--1136
+Overfull \hbox (9.3618pt too wide) in paragraph at lines 1134--1135
 [][] 
  []
 
 [22 <./images/ScratchDavid.png>]
-Overfull \hbox (20.46887pt too wide) in paragraph at lines 1142--1175
+Overfull \hbox (10.15762pt too wide) in paragraph at lines 1141--1174
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1195--1196
+Underfull \hbox (badness 10000) in paragraph at lines 1194--1195
 
- []
-
-<<<<<<< HEAD
-=======
-[23 <./images/davidloss.png> <./images/davidacc.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1233--1234
-
- []
->>>>>>> 744cc0beb8c1f1d766fce78fd8aa67863730a43b
-
-Underfull \hbox (badness 10000) in paragraph at lines 1189--1190
-
-<<<<<<< HEAD
  []
 
 [23]
-Underfull \hbox (badness 10000) in paragraph at lines 1196--1197
+Underfull \hbox (badness 10000) in paragraph at lines 1232--1233
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1198--1199
-=======
-Overfull \hbox (10.15762pt too wide) in paragraph at lines 1239--1275
+Overfull \hbox (10.15762pt too wide) in paragraph at lines 1238--1274
  [][] 
  []
 
 [24]
-<./images/albertoloss.png, id=530, 293.29575pt x 186.6975pt>
+<./images/albertoloss.png, id=520, 293.29575pt x 186.6975pt>
 File: ./images/albertoloss.png Graphic file (type png)
 <use ./images/albertoloss.png>
-Package pdftex.def Info: ./images/albertoloss.png  used on input line 1282.
+Package pdftex.def Info: ./images/albertoloss.png  used on input line 1281.
 (pdftex.def)             Requested size: 219.97125pt x 140.02277pt.
 
-Overfull \hbox (16.13708pt too wide) in paragraph at lines 1282--1283
+Overfull \hbox (16.13708pt too wide) in paragraph at lines 1281--1282
 [][] 
  []
 
-<./images/albertoacc.png, id=531, 281.25075pt x 190.91325pt>
+<./images/albertoacc.png, id=521, 281.25075pt x 190.91325pt>
 File: ./images/albertoacc.png Graphic file (type png)
 <use ./images/albertoacc.png>
-Package pdftex.def Info: ./images/albertoacc.png  used on input line 1287.
+Package pdftex.def Info: ./images/albertoacc.png  used on input line 1286.
 (pdftex.def)             Requested size: 210.93753pt x 143.18459pt.
 
-Overfull \hbox (7.10336pt too wide) in paragraph at lines 1287--1288
+Overfull \hbox (7.10336pt too wide) in paragraph at lines 1286--1287
 [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1308--1309
->>>>>>> 744cc0beb8c1f1d766fce78fd8aa67863730a43b
-
- []
-
-
-<<<<<<< HEAD
-Underfull \hbox (badness 10000) in paragraph at lines 1200--1201
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1202--1203
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1209--1210
-
- []
-
-[24]
-Underfull \hbox (badness 10000) in paragraph at lines 1211--1212
-
- []
-
-<./images/resnetfilters.png, id=504, 531.1845pt x 527.571pt>
-File: ./images/resnetfilters.png Graphic file (type png)
-<use ./images/resnetfilters.png>
-Package pdftex.def Info: ./images/resnetfilters.png  used on input line 1217.
-(pdftex.def)             Requested size: 385.02547pt x 382.41881pt.
-<./images/resnetheatmap.png, id=505, 532.99126pt x 528.17325pt>
-File: ./images/resnetheatmap.png Graphic file (type png)
-<use ./images/resnetheatmap.png>
-Package pdftex.def Info: ./images/resnetheatmap.png  used on input line 1219.
-(pdftex.def)             Requested size: 385.02547pt x 381.5578pt.
-[25 <./images/resnetfilters.png>]
-<./images/xceptionfilters.png, id=511, 531.1845pt x 531.1845pt>
-File: ./images/xceptionfilters.png Graphic file (type png)
-<use ./images/xceptionfilters.png>
-Package pdftex.def Info: ./images/xceptionfilters.png  used on input line 1223.
-
-(pdftex.def)             Requested size: 385.02547pt x 385.0381pt.
- [26 <./images/resnetheatmap.png>]
-<./images/heatmapxception.png, id=517, 534.798pt x 520.94624pt>
-File: ./images/heatmapxception.png Graphic file (type png)
-<use ./images/heatmapxception.png>
-Package pdftex.def Info: ./images/heatmapxception.png  used on input line 1225.
-
-(pdftex.def)             Requested size: 385.02547pt x 375.05716pt.
- [27 <./images/xceptionfilters.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1231--1232
-
- []
-
-[28 <./images/heatmapxception.png>] [29] (./MemoriaProyecto.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1256.
- [30
-
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1256.
-=======
-Underfull \hbox (badness 10000) in paragraph at lines 1314--1315
+Underfull \hbox (badness 10000) in paragraph at lines 1307--1308
 
  []
 
 [25 <./images/albertoloss.png> <./images/albertoacc.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1321--1322
+Underfull \hbox (badness 10000) in paragraph at lines 1313--1314
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1323--1324
+Underfull \hbox (badness 10000) in paragraph at lines 1320--1321
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1325--1326
+Underfull \hbox (badness 10000) in paragraph at lines 1322--1323
 
  []
 
-<./images/actmap.png, id=541, 1352.05125pt x 1489.565pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 1324--1325
+
+ []
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 1326.
+
+<./images/actmap.png, id=531, 1352.05125pt x 1489.565pt>
 File: ./images/actmap.png Graphic file (type png)
 <use ./images/actmap.png>
-Package pdftex.def Info: ./images/actmap.png  used on input line 1329.
-(pdftex.def)             Requested size: 405.6185pt x 446.87296pt.
-[26]
-<./images/actmap2.png, id=546, 1349.04pt x 1496.59125pt>
+Package pdftex.def Info: ./images/actmap.png  used on input line 1328.
+(pdftex.def)             Requested size: 385.02547pt x 424.1895pt.
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 1332.
+
+<./images/actmap2.png, id=532, 1349.04pt x 1496.59125pt>
 File: ./images/actmap2.png Graphic file (type png)
 <use ./images/actmap2.png>
-Package pdftex.def Info: ./images/actmap2.png  used on input line 1336.
-(pdftex.def)             Requested size: 404.71512pt x 448.98085pt.
- [27 <./images/actmap.png>]
-<./images/actmap3.png, id=553, 1358.07375pt x 1496.59125pt>
+Package pdftex.def Info: ./images/actmap2.png  used on input line 1334.
+(pdftex.def)             Requested size: 385.02547pt x 427.12668pt.
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 1338.
+
+<./images/actmap3.png, id=533, 1358.07375pt x 1496.59125pt>
 File: ./images/actmap3.png Graphic file (type png)
 <use ./images/actmap3.png>
-Package pdftex.def Info: ./images/actmap3.png  used on input line 1343.
-(pdftex.def)             Requested size: 407.42526pt x 448.98085pt.
- [28 <./images/actmap2.png>]
-<./images/actmap4.png, id=560, 1367.1075pt x 1496.59125pt>
+Package pdftex.def Info: ./images/actmap3.png  used on input line 1340.
+(pdftex.def)             Requested size: 385.02547pt x 424.295pt.
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 1344.
+
+<./images/actmap4.png, id=534, 1367.1075pt x 1496.59125pt>
 File: ./images/actmap4.png Graphic file (type png)
 <use ./images/actmap4.png>
-Package pdftex.def Info: ./images/actmap4.png  used on input line 1350.
-(pdftex.def)             Requested size: 410.13542pt x 448.98085pt.
- [29 <./images/actmap3.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1361--1362
+Package pdftex.def Info: ./images/actmap4.png  used on input line 1346.
+(pdftex.def)             Requested size: 385.02547pt x 421.48616pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1350--1351
+
+ []
+
+[26] [27 <./images/actmap.png>] [28 <./images/actmap2.png>] [29 <./images/actma
+p3.png>] [30 <./images/actmap4.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1352--1353
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1354--1355
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1356--1357
 
  []
 
@@ -1445,61 +1398,82 @@ Underfull \hbox (badness 10000) in paragraph at lines 1363--1364
 
  []
 
-[30 <./images/actmap4.png>]
-<./images/resnetfilters.png, id=574, 531.1845pt x 527.571pt>
-File: ./images/resnetfilters.png Graphic file (type png)
-<use ./images/resnetfilters.png>
-Package pdftex.def Info: ./images/resnetfilters.png  used on input line 1369.
-(pdftex.def)             Requested size: 385.02547pt x 382.41881pt.
-<./images/resnetheatmap.png, id=575, 532.99126pt x 528.17325pt>
-File: ./images/resnetheatmap.png Graphic file (type png)
-<use ./images/resnetheatmap.png>
-Package pdftex.def Info: ./images/resnetheatmap.png  used on input line 1371.
-(pdftex.def)             Requested size: 385.02547pt x 381.5578pt.
- [31 <./images/resnetfilters.png>]
-<./images/xceptionfilters.png, id=581, 531.1845pt x 531.1845pt>
-File: ./images/xceptionfilters.png Graphic file (type png)
-<use ./images/xceptionfilters.png>
-Package pdftex.def Info: ./images/xceptionfilters.png  used on input line 1375.
 
-(pdftex.def)             Requested size: 385.02547pt x 385.0381pt.
- [32 <./images/resnetheatmap.png>]
-<./images/heatmapxception.png, id=587, 534.798pt x 520.94624pt>
-File: ./images/heatmapxception.png Graphic file (type png)
-<use ./images/heatmapxception.png>
-Package pdftex.def Info: ./images/heatmapxception.png  used on input line 1377.
-
-(pdftex.def)             Requested size: 385.02547pt x 375.05716pt.
- [33 <./images/xceptionfilters.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1383--1384
+Underfull \hbox (badness 10000) in paragraph at lines 1365--1366
 
  []
 
-[34 <./images/heatmapxception.png>] [35] (MemoriaProyecto.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1409.
- [36
+[31]
+Underfull \hbox (badness 10000) in paragraph at lines 1367--1368
+
+ []
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 1371.
+
+<./images/resnetfilters.png, id=568, 531.1845pt x 527.571pt>
+File: ./images/resnetfilters.png Graphic file (type png)
+<use ./images/resnetfilters.png>
+Package pdftex.def Info: ./images/resnetfilters.png  used on input line 1373.
+(pdftex.def)             Requested size: 385.02547pt x 382.41881pt.
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 1377.
+
+<./images/resnetheatmap.png, id=569, 532.99126pt x 528.17325pt>
+File: ./images/resnetheatmap.png Graphic file (type png)
+<use ./images/resnetheatmap.png>
+Package pdftex.def Info: ./images/resnetheatmap.png  used on input line 1379.
+(pdftex.def)             Requested size: 385.02547pt x 381.5578pt.
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 1384.
+
+<./images/xceptionfilters.png, id=570, 531.1845pt x 531.1845pt>
+File: ./images/xceptionfilters.png Graphic file (type png)
+<use ./images/xceptionfilters.png>
+Package pdftex.def Info: ./images/xceptionfilters.png  used on input line 1386.
+
+(pdftex.def)             Requested size: 385.02547pt x 385.0381pt.
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 1390.
+
+<./images/heatmapxception.png, id=571, 534.798pt x 520.94624pt>
+File: ./images/heatmapxception.png Graphic file (type png)
+<use ./images/heatmapxception.png>
+Package pdftex.def Info: ./images/heatmapxception.png  used on input line 1392.
+
+(pdftex.def)             Requested size: 385.02547pt x 375.05716pt.
+[32 <./images/resnetfilters.png>] [33 <./images/resnetheatmap.png>] [34 <./imag
+es/xceptionfilters.png>] [35 <./images/heatmapxception.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1399--1400
+
+ []
+
+[36] [37] (./MemoriaProyecto.bbl)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1424.
+ [38
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1409.
->>>>>>> 744cc0beb8c1f1d766fce78fd8aa67863730a43b
-
-(./MemoriaProyecto.aux
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1424.
+ (./MemoriaProyecto.aux
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
 )
-<<<<<<< HEAD
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1256.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1256.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1424.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1424.
 
 Package rerunfilecheck Info: File `MemoriaProyecto.out' has not changed.
-(rerunfilecheck)             Checksum: A583BDE1920AC33B029D096759988B6E;2836.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1256.
+(rerunfilecheck)             Checksum: 9734107A8E2F58F410FDC925F2829A1E;2656.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1424.
  ) 
 Here is how much of TeX's memory you used:
- 15165 strings out of 480608
- 226461 string characters out of 5903631
+ 15260 strings out of 480608
+ 228107 string characters out of 5903631
  747182 words of memory out of 5000000
- 30560 multiletter control sequences out of 15000+600000
+ 30606 multiletter control sequences out of 15000+600000
  541227 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  45i,17n,77p,1630b,1293s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1514,54 +1488,10 @@ cal/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loc
 al/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/loca
 l/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local
 /texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on MemoriaProyecto.pdf (31 pages, 4518845 bytes).
+Output written on MemoriaProyecto.pdf (39 pages, 8264487 bytes).
 PDF statistics:
- 617 PDF objects out of 1000 (max. 8388607)
- 503 compressed objects within 6 object streams
- 201 named destinations out of 1000 (max. 500000)
- 454 words of extra memory for PDF output out of 10000 (max. 10000000)
-=======
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1409.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1409.
-
-
-
-Package rerunfilecheck Warning: File `MemoriaProyecto.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `MemoriaProyecto.out':
-(rerunfilecheck)             Before: 0D19A1EAA7A278D6E7FC11BDD4EC3604;2836
-(rerunfilecheck)             After:  5092507AA32FB2289DF7AF682CF19720;2836.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1409.
- ) 
-Here is how much of TeX's memory you used:
- 15524 strings out of 480790
- 236701 string characters out of 2897302
- 755587 words of memory out of 3000000
- 30988 multiletter control sequences out of 15000+200000
- 541227 words of font info for 56 fonts, out of 3000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 45i,17n,72p,1632b,1293s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{section*.51} has been referenced but does not exi
-st, replaced by a fixed one
-
- <C:\Users\alber\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm10
-95.pk><C:/Users/alber/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
-/cm/cmbx10.pfb><C:/Users/alber/AppData/Local/Programs/MiKTeX/fonts/type1/public
-/amsfonts/cm/cmbx12.pfb><C:/Users/alber/AppData/Local/Programs/MiKTeX/fonts/typ
-e1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/alber/AppData/Local/Programs/MiKTeX
-/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/alber/AppData/Local/Program
-s/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/alber/AppData/Local
-/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/alber/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/alb
-er/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/
-Users/alber/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10
-.pfb>
-Output written on MemoriaProyecto.pdf (37 pages, 8354188 bytes).
-PDF statistics:
- 697 PDF objects out of 1000 (max. 8388607)
- 241 named destinations out of 1000 (max. 500000)
- 494 words of extra memory for PDF output out of 10000 (max. 10000000)
->>>>>>> 744cc0beb8c1f1d766fce78fd8aa67863730a43b
+ 701 PDF objects out of 1000 (max. 8388607)
+ 567 compressed objects within 6 object streams
+ 244 named destinations out of 1000 (max. 500000)
+ 468 words of extra memory for PDF output out of 10000 (max. 10000000)
 

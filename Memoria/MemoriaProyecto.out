@@ -29,12 +29,6 @@
 \BOOKMARK [1][-]{section.5}{An\341lisis del modelo: mapas de activaci\363n, mapas de calor y conclusiones}{}% 29
 \BOOKMARK [2][-]{subsection.5.1}{Mapas de activaci\363n}{section.5}% 30
 \BOOKMARK [2][-]{subsection.5.2}{Mapas de calor}{section.5}% 31
-\BOOKMARK [3][-]{subsubsection.5.2.1}{Mapas de calor para ResNet-EC}{subsection.5.2}% 32
-\BOOKMARK [3][-]{subsubsection.5.2.2}{Mapas de calor para Xception-FT}{subsection.5.2}% 33
-\BOOKMARK [3][-]{subsubsection.5.2.3}{Conclusiones}{subsection.5.2}% 34
-\BOOKMARK [1][-]{section.6}{Posibles propuestas de mejora}{}% 35
-<<<<<<< HEAD
-\BOOKMARK [1][-]{section*.44}{Referencias}{}% 36
-=======
-\BOOKMARK [1][-]{section*.52}{Referencias}{}% 36
->>>>>>> 744cc0beb8c1f1d766fce78fd8aa67863730a43b
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Conclusiones}{subsection.5.2}% 32
+\BOOKMARK [1][-]{section.6}{Posibles propuestas de mejora}{}% 33
+\BOOKMARK [1][-]{section*.56}{Referencias}{}% 34
