@@ -1122,20 +1122,20 @@ La red que decidimos usar fue una red que desarrolló David para el bonus de la 
 
 \end{figure}
 
+Los resultados han sido los siguientes:
 
 \begin{figure}[H]
   \centering
   \begin{minipage}[b]{0.45\textwidth}
-    \includegraphics[scale=0.75]{./images/davidloss}
+    \includegraphics[scale=0.75]{./images/xception2aloss}
 	\caption{Training-Validation Loss}
   \end{minipage}
   \hfill
   \begin{minipage}[b]{0.45\textwidth}
-    \includegraphics[scale=0.75]{./images/davidacc}
+    \includegraphics[scale=0.75]{./images/xception2acc}
 	\caption{Training-Validation accuracy}
   \end{minipage}
 \end{figure}
-
 
 \begin{table}[H]
 \centering
@@ -1169,114 +1169,20 @@ Xception-EC                                            & \textcolor[rgb]{0.129,0
 \hline
 Xception-FT                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0157 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9946 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0352 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9861}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9875}                                                                       & 20                                                                                                              \\
 \hline
-\rowcolor{green} Red David                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0416 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9829 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0983 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.1420 }                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9514}                                                                       & 20                                                                                                              \\
+\rowcolor{green} CNN from scratch                        & \textcolor[rgb]{0.129,0.129,0.129}{1.0993  } & \textcolor[rgb]{0.129,0.129,0.129}{0.3233  } & \textcolor[rgb]{0.129,0.129,0.129}{1.0983 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.3576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.3388}                                                                       & 20                                                                                                              \\
 \hline
 \end{tabular}
-\caption{Resultados de la ejecución para la red CNN from scratch de David, mostrando los anteriores}
+\caption{Resultados de la ejecución para la red CNN from scratch, mostrando los anteriores}
 
 \end{table}
 
-Los resultados son muy malos, al nivel de los que hacen una predicción constante.  Entendemos que ha ocurrido esto debido a la gran cantidad de pesos a entrenar y al poco número de imágenes que hay en entrenamiento.  Hemos probado a modificar el learning rate de la red para que intentara aprender más rápido, pero aun así tras la primera época,  siempre se mantiene en valores tanto de función de pérdida como de accuracy constantes e iguales a los de las predicciones constantes. Por lo tanto, vemos que entrenar una red from scratch bajo estas condiciones es bastante inviable.\\
+Los resultados son decentes\\
 
 Hemos decidido tras ver esto que quizás sería mejor utilizar una red más simple, con menos parámetros.  Es por ello que hemos entrenado también una red más simple, que es la red que Alberto usó para su bonus de la Práctica 2. Esta red también consiguió buenos resultados,  y pensamos que tendrá bastante mejor capacidad de adaptación.
 
 \subsubsection{Segunda Versión: Red más simple}
 
-Esta red es la red diseñada por Alberto para el bonus 1 de la práctica 2. Es un modelo secuencial más simple que el de David, y que contiene un menor número de parámetros.
-
-La red está formada por las siguientes capas:
-
-\begin{lstlisting}
-
-    modelo_bonus = Sequential()
-    modelo_bonus.add(Conv2D(60, (3, 3), padding='same', kernel_initializer='orthogonal', input_shape=(224,224,3)))
-    modelo_bonus.add(LeakyReLU(alpha=0.1))
-    modelo_bonus.add(BatchNormalization(renorm=True))
-    modelo_bonus.add(Conv2D(60, (3, 3), padding='same', kernel_initializer='orthogonal'))
-    modelo_bonus.add(LeakyReLU(alpha=0.1))
-    modelo_bonus.add(BatchNormalization(renorm=True))
-    modelo_bonus.add(MaxPooling2D(pool_size=(2, 2)))
-    modelo_bonus.add(Dropout(0.25))
-    modelo_bonus.add(Conv2D(120, (3, 3), kernel_initializer='orthogonal'))
-    modelo_bonus.add(LeakyReLU(alpha=0.1))
-    modelo_bonus.add(BatchNormalization(renorm=True))
-    modelo_bonus.add(Conv2D(120, (3, 3), kernel_initializer='orthogonal'))
-    modelo_bonus.add(LeakyReLU(alpha=0.1))
-    modelo_bonus.add(BatchNormalization(renorm=True))
-    modelo_bonus.add(MaxPooling2D(pool_size=(2, 2)))
-    modelo_bonus.add(Dropout(0.25))
-    modelo_bonus.add(Flatten())
-    modelo_bonus.add(Dense(600, kernel_initializer='orthogonal'))
-    modelo_bonus.add(LeakyReLU(alpha=0.1))
-    modelo_bonus.add(BatchNormalization(renorm=True))
-    modelo_bonus.add(Dropout(0.5))
-    modelo_bonus.add(Dense(3, activation='softmax'))
-
-\end{lstlisting}
-
-Para tener unos mejores resultados hemos mantenido los parámetros y la estructura con la que fue ejecutado en su momento, incluyendo la parada por early stopping.\\
-
-El modelo se ha entrenado durante 7 épocas con los siguientes resultados:
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|}
-\hline
-\rowcolor[rgb]{0.753,0.753,0.753}  \textbf{Modelo}  & \textbf{Loss}                               & \textbf{Accuracy}                           & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation}\\\textbf{ Loss} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Validation }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Test }\\\textbf{ Accuracy} \end{tabular} & \begin{tabular}[c]{@{}>{\cellcolor[rgb]{0.753,0.753,0.753}}c@{}}\textbf{Número}\\\textbf{Épocas} \end{tabular}  \\
-\hline
-\rowcolor[rgb]{0.937,0.937,0.937} DN-V0             &                                             &                                             &                                                                                                                   &                                                                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3264}                                                                       &                                                                                                                 \\
-\hline
-DN-V1                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.6501}  & \textcolor[rgb]{0.129,0.129,0.129}{0.9588 } & \textcolor[rgb]{0.129,0.129,0.129}{3.1393}                                                                        & \textcolor[rgb]{0.129,0.129,0.129}{0.8333}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8361}                                                                       & 20                                                                                                              \\
-\hline
-DN-V2                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0109 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9973 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1146 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9597}                                                                       & 20                                                                                                              \\
-\hline
-DN-V2-reg                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0883 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9683 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1494 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9583}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9569}                                                                       & 20                                                                                                              \\
-\hline
-DN-V3                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.0089 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9964 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0924 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9826}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9736}                                                                       & 20                                                                                                              \\
-\hline
-ResNet-EC                                              & \textcolor[rgb]{0.129,0.129,0.129}{0.2519 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9063 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2134 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9236}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8805}                                                                       & 20                                                                                                              \\
-\hline
-ResNet-FT                                           & \textcolor[rgb]{0.129,0.129,0.129}{0.0102 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9952 } & \textcolor[rgb]{0.129,0.129,0.129}{0.5594 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.8576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8736}                                                                       & 20                                                                                                              \\
-\hline
-VGG16-EC                                               & \textcolor[rgb]{0.129,0.129,0.129}{0.1057 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9626 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1063 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9375}                                                                       & 20                                                                                                              \\
-\hline
-VGG16-FT                                            & \textcolor[rgb]{0.129,0.129,0.129}{1.099}   & \textcolor[rgb]{0.129,0.129,0.129}{0.3159 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0977 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.3576}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.3388}                                                                       & 20                                                                                                              \\
-\hline
-InceptionV3-EC                                         & \textcolor[rgb]{0.129,0.129,0.129}{0.2194 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9231 } & \textcolor[rgb]{0.129,0.129,0.129}{0.2337 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9201}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.8903}                                                                       & 20                                                                                                              \\
-\hline
-InceptionV3-FT                                      & \textcolor[rgb]{0.129,0.129,0.129}{0.0146 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9953 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1142 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9688}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9792}                                                                       & 20                                                                                                              \\
-\hline
-Xception-EC                                            & \textcolor[rgb]{0.129,0.129,0.129}{0.1746 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9405 } & \textcolor[rgb]{0.129,0.129,0.129}{0.1319 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9618}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9153}                                                                       & 20                                                                                                              \\
-\hline
-Xception-FT                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0157 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9946 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0352 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9861}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9875}                                                                       & 20                                                                                                              \\
-\hline
-Red David                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0416 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9829 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0983 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.1420 }                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9514}                                                                       & 20                                                                                                              \\
-\hline
-\rowcolor{green} Red Alberto                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3272 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9104  } & \textcolor[rgb]{0.129,0.129,0.129}{0.4354 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.8993 }                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9055}                                                                       & 7                                                                                                              \\
-\hline
-
-\end{tabular}
-\caption{Resultados de la ejecución para la red CNN from scratch de Alberto, mostrando los anteriores}
-\end{table}
-
-
-\begin{figure}[H]
-  \centering
-  \begin{minipage}[b]{0.45\textwidth}
-    \includegraphics[scale=0.75]{./images/albertoloss}
-	\caption{Training-Validation Loss}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[b]{0.45\textwidth}
-    \includegraphics[scale=0.75]{./images/albertoacc}
-	\caption{Training-Validation accuracy}
-  \end{minipage}
-\end{figure}
-
-
-Los resultados son un poco peores que el modelo de David pero están bastante bien para tratarse de un modelo más simple.\\
-
-Después de haber probado estos modelos podemos llegar a la conclusión de que no es necesario utilizar forzosamente un modelo preentrenado para afrontar este problema, ya que conseguimos unos resultados interesantes desde un enfoque más simple. No obstante, para obtener el mejor modelo posible sí que es recomendable usar modelos preentrenados, como hemos visto con DenseNet o Xception.
+INCLUIR AQUÍ LO DE ALBERTO
 
 \section{Análisis del modelo: mapas de activación, mapas de calor y conclusiones}
 
@@ -1289,38 +1195,11 @@ Nuestro objetivo en esta sección es intentar comprender un poco mejor qué cara
 
 Pensamos que una muy buena forma de visualizar cómo ha aprendido la red es viendo los mapas de activación de algunas de sus capas frente a una entrada. De esta manera podremos ver qué filtro sufren mayor activacion, cuáles menos, y en qué zonas. De esta manera se podría llegar a intuir determinadas zonas de la imagen que son relevantes a la hora de hacer una determinada predicción.  Además se podrá ver también de qué forma se va manipulando y transformando la entrada conforme va pasando a lo largo de la red, desde el comienzo que será la imagen original hasta las últimas capas donde la información queda resumida en imágenes muy pequeñas donde el valor de cada pixel condensa una alta información y donde ya no se llega a distinguir la forma original de la imagen.\\
 
-Puesto que hay muchas capas en la red Xception, y además hay bastantes canales por capa, hemos decidido restringir la salida de los mapas de activación a sólo unas determinadas capas, algunas de la parte superior de la red, otras de la parte media de la red y otras de la parte final de la red,  para intentar vislumbrar los hechos que acabamos de decir.\\
+Puesto que hay muchas capas en la red DenseNet121, y además hay bastantes canales por capa, hemos decidido restringir la salida de los mapas de activación a sólo unas determinadas capas, algunas de la parte superior de la red, otras de la parte media de la red y otras de la parte final de la red,  para intentar vislumbrar los hechos que acabamos de decir.\\
 
-Seleccionando 4 capas distribuidas a lo largo de la red hemos obtenido los siguientes resultados (las capas están ordenadas de menor a mayor profuncidad):\\
+Los resultados que hemos obtenido son los siguientes:\\
 
-\begin{figure}[H]
-  \centering
-    \includegraphics[scale=0.3]{./images/actmap}
-	\caption{Mapa de activación para la capa block1\_conv2}
-
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-    \includegraphics[scale=0.3]{./images/actmap2}
-	\caption{Mapa de activación para la capa block3\_sepconv1\_act}
-
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-    \includegraphics[scale=0.3]{./images/actmap3}
-	\caption{Mapa de activación para la capa conv2d\_14}
-
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-    \includegraphics[scale=0.3]{./images/actmap4}
-	\caption{Mapa de activación para la capa block14\_sepconv2\_act}
-
-\end{figure}
-
+INCLUIR IMÁGENES AQUÍ\\
 
 Como podemos comprobar: INCLUIR RESULTADOS AQUÍ
 
@@ -1359,7 +1238,6 @@ Como posibles propuestas para mejoras del modelo se podrían tratar los siguient
 
 \begin{itemize}
 \item Modificar diferentes conjuntos de hiperparámetros de la redes , como por ejemplo parámetros del data augmentation o dropout y seleccionar el conjunto para el que el conjunto de hiperparámetros que en validación haya dado mejores resultados.  Puesto que hemos probado muchas redes, el tiempo de ejecución hubiera crecido bastante, pero reconocemos que todavía hay margen de mejora empleando el conjunto de validación para poder optimizar más los resultados de la red variando los hiperparámetros. Actualmente aunque dividimos los datos de entrenamiento sacando un subconjunto para validación, realmente no explotamos el potencial que tiene el conjunto de validación.
-\item Se podría haber hecho una comparación más exhaustiva entre los distintos modelos con el objetivo de seleccionar el mejor con mayor garantías utilizando por ejemplo K-fold CV como protocolo experimental. Además, para obtener el mejor modelo posible para cada caso, podríamos haber usado early stopping en lugar de fijar un número concreto de épocas.
 \item Se podrían incluir más técnicas de visualización, como por ejemplo calcular las top n patches para algunas de las neuronas de la red, con el objetivo de ver qué regiones de las imágenes han dado mayor valor de activación para esas neuronas. Seleccionando algunas neuronas situadas cerca de la capa de clasificación, cuyo campo receptivo sería prácticamente toda la red, podremos observar cuáles son las imágenes que más claramente dan signos de ser normales, tener covid, o tener otro tipo de neumonías víricas, cosa que sería muy interesante para establecer los ejemplos más característicos de cada conjunto. Además podríamos seleccionar neuronas más alejadas de las capas finales, que tengan un campo receptivo menor, para ver qué patrones de medio tamaño se reconocen en la red que luego serán útiles para la clasificación, ya que facilitaría mucho también el encontrar patrones en una imagen que fueran determinante a la hora de decidir la clase de una imagen.
 \item Como hemos podido observar en los mapas de calor, cuando usamos una red preentrenada como extractor de características,  las redes neuronales focalizan su atención en muchas ocasiones en distintas zonas de la imagen que muy poco o nada tienen que ver con los pulmones, donde es evidente que es donde se puede deducir la presencia o no de enfermedad,  tal y como lo muestran los modelos de fine tuning que hemos podido visualizar por mapas de calor.  Lo que podríamos hacer es forzar a nuestro modelo a prestar atención a los pulmones en vez de a los bordes de la imagen, los cuales normalmente tienen letras u otros elementos perniciosos. Para ello podríamos intentar oscurecer los bordes de la imagen,  redimensionar la agrandándola y recortarla dejando fuera los bordes, o podríamos utilizar algún método más sofisticado donde pudiéramos reconocer y eliminar las letras, para posteriormente hacer una reconstrucción de la imagen.  Existen muchas alternativas para forzar a que la red preste atención a la zona pulmonar. Esto no va en contra de la filosofía de las redes neuronales, en cuanto a que ellas deciden qué patrones aprender a reconocer reconocer, puesto que lo único que hacemos es focalizar su atención en la zona de la imagen que nosotros queremos.
 \end{itemize}
