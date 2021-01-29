@@ -1169,11 +1169,27 @@ Xception-EC                                            & \textcolor[rgb]{0.129,0
 \hline
 Xception-FT                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0157 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9946 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0352 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9861}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9875}                                                                       & 20                                                                                                              \\
 \hline
-\rowcolor{green} Red David                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0416 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9829 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0983 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.1420 }                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9514}                                                                       & 20                                                                                                              \\
+\rowcolor{green} Red David                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0416 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9829 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0983 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.1420 }                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9139}                                                                       & 20                                                                                                              \\
 \hline
 \end{tabular}
 \caption{Resultados de la ejecución para la red CNN from scratch de David, mostrando los anteriores}
 
+\end{table}
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 229                                         & 0                                        & 6                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 3                                        & 199                                       & 42                                      \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 10                                        & 1                                        & 230                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
+\end{tabular}
+\end{center}
+\caption{Matriz de confusión para la red de David}
 \end{table}
 
 Los resultados son muy malos, al nivel de los que hacen una predicción constante.  Entendemos que ha ocurrido esto debido a la gran cantidad de pesos a entrenar y al poco número de imágenes que hay en entrenamiento.  Hemos probado a modificar el learning rate de la red para que intentara aprender más rápido, pero aun así tras la primera época,  siempre se mantiene en valores tanto de función de pérdida como de accuracy constantes e iguales a los de las predicciones constantes. Por lo tanto, vemos que entrenar una red from scratch bajo estas condiciones es bastante inviable.\\
@@ -1216,7 +1232,7 @@ La red está formada por las siguientes capas:
 
 Para tener unos mejores resultados hemos mantenido los parámetros y la estructura con la que fue ejecutado en su momento, incluyendo la parada por early stopping.\\
 
-El modelo se ha entrenado durante 7 épocas con los siguientes resultados:
+El modelo se ha entrenado durante 8 épocas con los siguientes resultados:
 
 \begin{table}[H]
 \centering
@@ -1250,9 +1266,9 @@ Xception-EC                                            & \textcolor[rgb]{0.129,0
 \hline
 Xception-FT                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0157 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9946 } & \textcolor[rgb]{0.129,0.129,0.129}{0.0352 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9861}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9875}                                                                       & 20                                                                                                              \\
 \hline
-Red David                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0416 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9829 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0983 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.1420 }                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9514}                                                                       & 20                                                                                                              \\
+Red David                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0416 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9829 } & \textcolor[rgb]{0.129,0.129,0.129}{1.0983 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.1420 }                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9139}                                                                       & 20                                                                                                              \\
 \hline
-\rowcolor{green} Red Alberto                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3272 } & \textcolor[rgb]{0.129,0.129,0.129}{0.9104  } & \textcolor[rgb]{0.129,0.129,0.129}{0.4354 }                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.8993 }                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9055}                                                                       & 7                                                                                                              \\
+\rowcolor{green} Red Alberto                        & \textcolor[rgb]{0.129,0.129,0.129}{0.3538  } & \textcolor[rgb]{0.129,0.129,0.129}{0.9125  } & \textcolor[rgb]{0.129,0.129,0.129}{0.5054}                                                                       & \textcolor[rgb]{0.129,0.129,0.129}{0.9028}                                                                             & \textcolor[rgb]{0.129,0.129,0.129}{0.9388}                                                                       & 8                                                                                                              \\
 \hline
 
 \end{tabular}
@@ -1273,8 +1289,23 @@ Red David                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0416 } &
   \end{minipage}
 \end{figure}
 
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{l|
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |
+>{\columncolor[HTML]{EFEFEF}}l |}
+\hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-COVID}}  & 222                                         & 7                                        & 6                                       \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Normal}} & 1                                        & 233                                       & 10                                      \\ \hline
+\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}\textbf{V-Neum.}}  & 5                                        & 15                                        & 221                                     \\ \hline
+                                                                & \cellcolor[HTML]{C0C0C0}\textbf{P-COVID} & \cellcolor[HTML]{C0C0C0}\textbf{P-Normal} & \cellcolor[HTML]{C0C0C0}\textbf{P-Neum} \\ \cline{2-4}
+\end{tabular}
+\end{center}
+\caption{Matriz de confusión para la red de Alberto}
+\end{table}
 
-Los resultados son un poco peores que el modelo de David pero están bastante bien para tratarse de un modelo más simple.\\
+Los resultados son bastnate similares al modelo de David, y están bastante bien para tratarse de un modelo más simple.\\
 
 Después de haber probado estos modelos podemos llegar a la conclusión de que no es necesario utilizar forzosamente un modelo preentrenado para afrontar este problema, ya que conseguimos unos resultados interesantes desde un enfoque más simple. No obstante, para obtener el mejor modelo posible sí que es recomendable usar modelos preentrenados, como hemos visto con DenseNet o Xception.
 
