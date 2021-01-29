@@ -30,6 +30,5 @@
 \contentsline {section}{\numberline {5}Análisis del modelo: mapas de activación, mapas de calor y conclusiones}{26}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Mapas de activación}{26}{subsection.5.1}%
 \contentsline {subsection}{\numberline {5.2}Mapas de calor}{31}{subsection.5.2}%
-\contentsline {subsubsection}{\numberline {5.2.1}Conclusiones}{36}{subsubsection.5.2.1}%
-\contentsline {section}{\numberline {6}Posibles propuestas de mejora}{36}{section.6}%
-\contentsline {section}{Referencias}{38}{section*.56}%
+\contentsline {section}{\numberline {6}Posibles propuestas de mejora}{37}{section.6}%
+\contentsline {section}{Referencias}{39}{section*.56}%
