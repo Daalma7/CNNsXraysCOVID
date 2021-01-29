@@ -6,19 +6,32 @@
 \contentsline {subsection}{\numberline {3.2}Lectura de la Base de Datos}{5}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}Creación de los conjuntos de train y test}{6}{subsection.3.3}%
 \contentsline {section}{\numberline {4}Implementación de los modelos}{6}{section.4}%
-\contentsline {subsection}{\numberline {4.1}DenseNet121}{6}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.1}DenseNet121}{7}{subsection.4.1}%
 \contentsline {subsubsection}{\numberline {4.1.1}Version 0: Extractor de características inicial, sin entrenamiento}{7}{subsubsection.4.1.1}%
 \contentsline {subsubsection}{\numberline {4.1.2}Version 1: Extractor de características inicial, entrenando la capa de salida}{8}{subsubsection.4.1.2}%
 \contentsline {subsubsection}{\numberline {4.1.3}Version 2: Data augmentation, más capas densas}{9}{subsubsection.4.1.3}%
-\contentsline {subsubsection}{\numberline {4.1.4}Version 3: Fine tunning}{11}{subsubsection.4.1.4}%
-\contentsline {subsection}{\numberline {4.2}ResNet50}{12}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}VGG16}{14}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}InceptionV3}{16}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Xception}{18}{subsection.4.5}%
-\contentsline {subsection}{\numberline {4.6}Red from scratch}{20}{subsection.4.6}%
-\contentsline {section}{\numberline {5}Análisis del modelo: mapas de activación, mapas de calor y conclusiones}{21}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Mapas de activación}{21}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Mapas de calor}{21}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Conclusiones}{25}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Posibles propuestas de mejora}{25}{section.6}%
-\contentsline {section}{\numberline {7}Referencias}{26}{section.7}%
+\contentsline {subsubsection}{\numberline {4.1.4}Version 3: Fine tunning}{12}{subsubsection.4.1.4}%
+\contentsline {subsubsection}{\numberline {4.1.5}Modificaciones a aplicar a las siguientes redes}{13}{subsubsection.4.1.5}%
+\contentsline {subsection}{\numberline {4.2}ResNet50}{13}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}ResNet-EC}{13}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}ResNet-FT}{14}{subsubsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.3}VGG16}{15}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}VGG16-EC}{15}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}VGG16-FT}{16}{subsubsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.4}InceptionV3}{17}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.1}InceptionV3-EC}{17}{subsubsection.4.4.1}%
+\contentsline {subsubsection}{\numberline {4.4.2}InceptionV3-FT}{18}{subsubsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.5}Xception}{19}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.5.1}Xception-EC}{19}{subsubsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.2}Xception-FT}{20}{subsubsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.6}Entrenamiento de una red desde 0}{21}{subsection.4.6}%
+\contentsline {subsubsection}{\numberline {4.6.1}Primera Versión: Red más compleja}{21}{subsubsection.4.6.1}%
+\contentsline {subsubsection}{\numberline {4.6.2}Segunda Versión: Red más simple}{23}{subsubsection.4.6.2}%
+\contentsline {section}{\numberline {5}Análisis del modelo: mapas de activación, mapas de calor y conclusiones}{23}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Mapas de activación}{24}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Mapas de calor}{24}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Mapas de calor para ResNet-EC}{25}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Mapas de calor para Xception-FT}{27}{subsubsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.3}Conclusiones}{28}{subsubsection.5.2.3}%
+\contentsline {section}{\numberline {6}Posibles propuestas de mejora}{28}{section.6}%
+\contentsline {section}{Referencias}{30}{section*.43}%
