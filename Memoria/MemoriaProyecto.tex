@@ -119,11 +119,11 @@ Las neumonías con respecto al nivel radiológico se dividen en 3 tipos: Neumon�
 
 La neumonía vírica COVID-19 entra dentro de este último grupo.  Desde el mes de diciembre del año 2019,  cuando se detectó el primer caso de COVID-19,  el virus se ha propagado a nivel mundial teniendo una alta tasa de contagio, considerándose una pandemia desde marzo de 2020.  Ha provocado desde entonces la mayor crisis sanitaria que se ha vivido globalmente en los tiempos modernos, y es una prioridad el intentar controlar la pandemia. Las radiografías torácicas permiten diagnosticar la enfermedad y entender mejor cómo afecta al organismo, por lo que consideramos muy relevante su estudio.  Sin embargo,  es posible confundir una neumonía vírica provocada por COVID-19 con otras neumonías víricas ocasionadas por otros patógenos. \\
 
-Existen ya algunos estudios los cuales intentan encontrar patrones radiológicos que intenten diferenciar el COVID-19 de otros tipos de neumonías víricas, como en \cite{diferencias1, diferencias2, diferencias3}\\
+Existen ya algunos estudios, los cuales intentan encontrar patrones radiológicos que intenten diferenciar el COVID-19 de otros tipos de neumonías víricas, como en \cite{diferencias1, diferencias2, diferencias3}\\
 
 Las redes neuronales neuronales convolucionales constituyen uno de los métodos más potentes en la actualidad para clasificación de imágenes,  y tienen una eficacia probada en una enorme cantidad de contextos.  Estos métodos han sido también empleados en el contexto de la medicina, y particularmente, en el de la radiología para conseguir múltiples objetivos debido a su gran potencial de aprendizaje. \cite{problemas1, problemas2} Además, el hecho de usar redes neuronales preentrenadas puede ser muy útil no sólo a la hora de la rapidez a la hora de entrenarlas, sino debido a que se pueden aprovechar características aprendidas en otros contextos totalmente distintos para emplearlos en los problemas que nos conciernen.\\
 
-Por tanto,  pretendemos con nuestro estudio desarrollar mediante redes neuronales preentrenadas, un método efectivo para clasificación de radiografías torácicas postoanteriores, que sea capaz de distinguir pacientes con pulmones sanos de pacientes con pulmones enfermos, por neumonías víricas, pero además, que sea capaz de distinguir entre neumonías víricas, centrándonos en la distinción de si el agente patógeno es el COVID-19 o no lo es, para un mejor diagnóstico, estudio y entendimiento de esta enfermedad.  Utilizando distintos tipos de redes conocidas, entrenadas con pesos en Imagenet, podremos hacer comparaciones entre ellas y seleccionar la que mejores resultados aporte. Además intentaremos visualizar las diferentes activaciones que tiene la red para entender un poco mejor las características que ha aprendido, y comprobar que focaliza realmente su atención en la zona pulmonar.  El entender qué partes de la radiografía considera la red más importantes a la hora de clasificar podría usarse para mejorar el diagnóstico de la enfermedad y dirigir posteriores estudios de cara a entender mejor cómo afecta la enfermedad al organismo y cómo se diferencia de otro tipo de neumonías víricas \\
+Por tanto,  pretendemos con nuestro estudio desarrollar, mediante redes neuronales preentrenadas, un método efectivo para clasificación de radiografías torácicas postoanteriores, que sea capaz de distinguir pacientes con pulmones sanos de pacientes con pulmones enfermos, por neumonías víricas, pero además, que sea capaz de distinguir entre neumonías víricas, centrándonos en la distinción de si el agente patógeno es el COVID-19 o no lo es, para un mejor diagnóstico, estudio y entendimiento de esta enfermedad.  Utilizando distintos tipos de redes conocidas, entrenadas con pesos en Imagenet, podremos hacer comparaciones entre ellas y seleccionar la que mejores resultados aporte. Además intentaremos visualizar las diferentes activaciones que tiene la red para entender un poco mejor las características que ha aprendido, y comprobar que focaliza realmente su atención en la zona pulmonar.  El entender qué partes de la radiografía considera la red más importantes a la hora de clasificar podría usarse para mejorar el diagnóstico de la enfermedad y dirigir posteriores estudios de cara a entender mejor cómo afecta la enfermedad al organismo y cómo se diferencia de otro tipo de neumonías víricas \\
 
 \section{Base de Datos elegida para el problema}
 \subsection{Información de la Base de Datos}
@@ -198,9 +198,17 @@ Primero creamos un vector agrupando las imágenes de las tres clases y cambiamos
 
 A continuación, usando la función \textit{to\_categorical} obtenemos una representación binaria de las clases (la clase 0 pasa a ser [1,0,0], la 1 es [0,1,0] y la 2 es [0,0,1]).\\
 
-Ahora, para dividir los datos entre entrenamiento y test vamos a optar por hacer una permutación aleatoria de las imágenes, y posteriormente dividiéndolas en proporción 80\%-20\% para entrenamiento y test respectivamente, obteniendo un total de 2880 imágenes para entrenar y 720 para test. Hemos decidido hacer esta partición de los datos debido en parte a que, como hemos hecho notar antes, no hemos encontrado ninguna evidencia de que haya imágenes dentro del conjunto de datos que correspondan al mismo paciente en diferentes instantes de tiempo que puedan hacer que la tarea de clasificación se vea influenciada por este hecho. De ser así, que haya imágenes para un mismo paciente que cayeran unas en entrenamiento y otras en test, harían que aumentara el sobreajuste y la varianza de la red, haciendo que probablemente no generalizara bien y diera peores resultados en test. También pensamos que hubiera sido bastante útil hacer una división de los datos de forma temporal, dejando una proporción de las imágenes tomadas más recientemente como las imágenes para test, puesto que la enfermedad del COVID-19 está en constante evolución y buscamos que la red sea útil para poder ayudar a clasificar casos actuales de COVID-19 (aunque entendemos que las imágenes de pulmones sanos y pulmones con otros tipos de neumonías víricas no varían tanto a lo largo del tiempo). Sin embargo no hemos podido hacer esta división ya que no poseemos información de cuando se han tomado las imágenes. Son por estos hecho por los que hemos optado hacer el tipo de partición que hemos hecho.
+Ahora, para dividir los datos entre entrenamiento y test vamos a optar por hacer una permutación aleatoria de las imágenes, y posteriormente dividiéndolas en proporción 80\%-20\% para entrenamiento y test respectivamente, obteniendo un total de 2880 imágenes para entrenar y 720 para test. Hemos decidido hacer esta partición de los datos debido en parte a que, como hemos hecho notar antes, no hemos encontrado ninguna evidencia de que haya imágenes dentro del conjunto de datos que correspondan al mismo paciente en diferentes instantes de tiempo que puedan hacer que la tarea de clasificación se vea influenciada por este hecho. De ser así, que haya imágenes para un mismo paciente que cayeran unas en entrenamiento y otras en test, harían que aumentara el sobreajuste y la varianza de la red, haciendo que probablemente no generalizara bien y diera peores resultados en test. También pensamos que hubiera sido bastante útil hacer una división de los datos de forma temporal, dejando una proporción de las imágenes tomadas más recientemente como las imágenes para test, puesto que la enfermedad del COVID-19 está en constante evolución y buscamos que la red sea útil para poder ayudar a clasificar casos actuales de COVID-19 (aunque entendemos que las imágenes de pulmones sanos y pulmones con otros tipos de neumonías víricas no varían tanto a lo largo del tiempo). Sin embargo no hemos podido hacer esta división ya que no poseemos información de cuando se han tomado las imágenes. Son por estos hechos por los que hemos optado hacer el tipo de partición indicada.
 
 \section{Implementación de los modelos}
+
+En esta sección confeccionaremos distintos modelos convolucionales con distintas arquitecturas para poder compararlos y encontrar el que nos proporcione una mejor aproximación de solución a nuestro problema.\\
+
+Principalmente nos hemos centrado en DenseNet121, que es el modelo inicial del que partimos, pero luego hemos probado otras arquitecturas similares partiendo de otros modelos conocidos para poder comparar.\\
+
+Por último, también hemos probado con un modelo "from scratch", basado en la arquitectura diseñada por David en la práctica 2 para uno de los ejercicios, para comprobar cómo funciona este modelo, que no está preentrenado y es un poco más simple que los anteriores.\\
+
+Para intentar que todos los modelos se entrenen en condiciones similares, hemos entrenado todos ellos durante 20 épocas.
 
 \subsection{DenseNet121}
 
@@ -289,7 +297,7 @@ La matriz de confusión de la clasificación ha sido la siguiente:
 \caption{Matriz de confusión para la red DN-V0}
 \end{table}
 
-
+Podemos comprobar que efectivamente el modelo no es para nada satisfactorio. Obtenemos un valor de test accuracy cercano al 33\%, que sería justo lo equivalente a elegir una de las tres clases de forma aleatoria sin ningún tipo de criterio.
 
 \subsubsection{Version 1: Extractor de características inicial, entrenando la capa de salida}
 
@@ -344,6 +352,8 @@ Los resultados obtenidos han sido los siguientes:
 \caption{Matriz de confusión para la red DN-V1}
 \end{table}
 
+En este caso vemos que existe una notoria mejoría, consiguiendo unos resultados bastante buenos para solo haber incluido una capa final entrenable. Observando la matriz de confusión podemos apreciar que cuando predice que un pulmón es sano, tiene una tasa de acierto muy alta (tan solo un fallo), pero sin embargo tiene problemas con esta clase respecto a la neumonía vírica, pues hay 103 imágenes cuya predicción es Viral Pneumonia cuando realmente son pulmones sanos.
+
 \subsubsection{Version 2: Data augmentation, más capas densas}
 
 Seguimos empleando la red preentrenada como extractor de características pero se realiza un preprocesado más exhaustivo de imágenes, con image augmentation y normalización, además de hacer un modelo denso de mayor profundidad.\\
@@ -381,6 +391,8 @@ layer1 = keras.layers.Dense(units=500, activation="relu")(inputs)
 layer2 = keras.layers.Dense(units=200, activation="relu")(layer1)
 outputs = keras.layers.Dense(units=3, activation="softmax")(layer2)
 \end{lstlisting}
+
+Entrenamos el modelo obteniendo los siguientes resultados:
 
 \begin{figure}[H]
   \centering
@@ -432,7 +444,9 @@ DN-V1                                               & \textcolor[rgb]{0.129,0.12
 
 
 
-En esta última versión puede ser que tengamos un poco de overfitting puesto que el validation loss no decrece al mismo ritmo que el training loss. Regularizamos añadiendo una capa de Dropout.
+Podemos ver que la mejora ha sido bastante efectiva, obteniendo un valor para test accuracy de 0.9597. Sin embargo, si nos fijamos en las gráficas, puede ser que tengamos un poco de overfitting puesto que el validation loss no decrece al mismo ritmo que el training loss.\\
+
+Para solucionar esto, regularizamos el modelo añadiendo una capa de Dropout.
 
 \begin{lstlisting}
 inputs = keras.layers.Input(shape=[1024])
@@ -490,9 +504,21 @@ DN-V2                                               & \textcolor[rgb]{0.129,0.12
 \caption{Matriz de confusión para la red DN-V2-reg}
 \end{table}
 
+Con la regularización hemos conseguido mantener prácticamente la precisión que teníamos, pero hemos reducido un poco el overfitting que había, como podemos comprobar en las gráficas.\\
+
+Comparando la matriz de confusión con la primera que comentamos, vemos que se ha mejorado el problema que había (las 103 imágenes clasificadas como Viral Pneumonia cuando eran pulmones sanos han pasado a ser solo 11). Otro aspecto a comentar es que la clase que mejor clasifica es la clase COVID, con solo 9 ejemplos mal clasificados.
+
 \subsubsection{Version 3: Fine tunning}
 
-Vamos a probar ahora a hacer un ajuste fino de la red completa, tomando como pesos iniciales los de imagenet. Ahora ya no solo vamos a utilizar DenseNet como extractor de características, sino que, en vez de estar la red congelada, vamos a ir moviendo sus pesos con el entrenamiento.
+Vamos a probar ahora a hacer un ajuste fino de la red completa, tomando como pesos iniciales los de imagenet. Ahora ya no solo vamos a utilizar DenseNet como extractor de características, sino que, en vez de estar la red congelada, vamos a ir moviendo sus pesos con el entrenamiento.\\
+
+En este caso, indicamos que los pesos sí son entrenables:
+
+\begin{lstlisting}
+denseNet.trainable = True
+\end{lstlisting}
+
+Entrenamos con la función \textit{fit\_generator} y obtenemos lo siguiente:
 
 \begin{figure}[H]
   \centering
@@ -545,10 +571,15 @@ DN-V2-reg                                           & \textcolor[rgb]{0.129,0.12
 \caption{Matriz de confusión para la red DN-V3}
 \end{table}
 
+Los resultados obtenidos son bastante buenos, superando el 97\% de test accuracy. La matriz de confusión nos sigue indicando que el único pequeño problema que sigue teniendo son esas 14 imágenes de la clase NORMAL clasificadas como Viral Pneumonia, que aunque se ha reducido respecto a las versiones iniciales, ha sido una constante en todo el modelo.\\
+
+
+Ahora vamos a aplicar el modelo de la versión 2, donde utilizábamos los pesos fijos, y este último modelo de fine tunning, pero partiendo de otras arquitecturas distintas a DenseNet.
 
 
 \subsection{ResNet50}
 
+Para la primera versión con pesos congelados tenemos lo siguiente:
 
 \begin{figure}[H]
   \centering
@@ -605,6 +636,11 @@ DN-V3                                               & \textcolor[rgb]{0.129,0.12
 \end{center}
 \caption{Matriz de confusión para la red ResNet}
 \end{table}
+
+
+El resultado obtenido es bueno, pero no se acerca al anterior de DenseNet. \\
+
+Para la versión fine tunning:
 
 \begin{figure}[H]
   \centering
@@ -663,8 +699,11 @@ ResNet                                              & \textcolor[rgb]{0.129,0.12
 \caption{Matriz de confusión para la red ResNet-FT}
 \end{table}
 
+A diferencia de lo que pasaba con DenseNet, con ResNet no ha funcionado mejor hacer fine tunning. Además, por las gráficas podemos apreciar que tal y como hemos definido la arquitectura tenemos overfitting, por lo que tendríamos que regularizarlo aún más para mejorar el aprendizaje.
 
 \subsection{VGG16}
+
+Primero vemos la versión usando VGG16 como extractor de características:
 
 \begin{figure}[H]
   \centering
@@ -722,6 +761,9 @@ ResNet-FT                                           & \textcolor[rgb]{0.129,0.12
 \caption{Matriz de confusión para la red VGG16}
 \end{table}
 
+En este caso, los resultados son bastante buenos para ser el modelo sin el ajuste fino, muy parecido a DenseNet en ese sentido.
+
+Veamos el segundo modelo:
 
 \begin{figure}[H]
   \centering
@@ -780,7 +822,13 @@ VGG16                                               & \textcolor[rgb]{0.129,0.12
 \caption{Matriz de confusión para la red VGG16-TF}
 \end{table}
 
+Los resultados son realmente malos, no se aprecia ningún tipo de aprendizaje, ya que son muy cercanos a los que obtuvimos con DN-V0, donde no había ningún tipo de entrenamiento. De hecho, si vemos la matriz de confusión, el modelo siempre predice que todas las imágenes pertenecen a la clase NORMAL.\\
+
+La ejecución se ha hecho en las mismas condiciones que los demás modelos, luego solo podemos concluir que este modelo no funciona para nada bien en su versión fine tunning.
+
 \subsection{InceptionV3}
+
+Primera versión:
 
 \begin{figure}[H]
   \centering
@@ -841,6 +889,11 @@ VGG16-FT                                            & \textcolor[rgb]{0.129,0.12
 \end{center}
 \caption{Matriz de confusión para la red InceptionV3}
 \end{table}
+
+
+En general es un buen resultado, aunque no es excepcional comparado con algunos anteriores.\\
+
+Para la segunda versión:
 
 \begin{figure}[H]
   \centering
@@ -904,8 +957,11 @@ InceptionV3                                         & \textcolor[rgb]{0.129,0.12
 \caption{Matriz de confusión para la red InceptionV3-FT}
 \end{table}
 
+Ahora sí que hemos dado un salto de calidad respecto al anterior, que está a la altura del mejor modelo hasta el momento (DN-V3). La única dificultad que encuentra el modelo está a la hora de clasificar imágenes de la clase Neumonía Viral, confunciéndolas con imágenes de pulmones sanos.
+
 \subsection{Xception}
 
+Versión con la red congelada:
 
 \begin{figure}[H]
   \centering
@@ -969,6 +1025,10 @@ InceptionV3-FT                                      & \textcolor[rgb]{0.129,0.12
 \end{center}
 \caption{Matriz de confusión para la red Xception}
 \end{table}
+
+Buenos resultados, que recuerdan bastante a la versión de InceptionV3, que tiene sentido al ser modelo similares.\\
+
+Para la versión fine tunning:
 
 \begin{figure}[H]
   \centering
@@ -1036,7 +1096,13 @@ Xception                                            & \textcolor[rgb]{0.129,0.12
 \caption{Matriz de confusión para la red Xception-FT}
 \end{table}
 
+Estos resultados son los mejores obtenidos hasta el momento, con casi un 99\% de precisión en el conjunto test. De hecho, podemos ver que solo ha fallado en la clasificación de 9 imágenes de las 720 que conforman el conjunto test.\\
+
+Observando la matriz de confusión vemos que, al igual que InceptionV3,  8 de los 9 errores han sido por predecir la clase Normal cuando era Neumonía Vírica. Esto contrasta con el que ha sido nuestro segundo mejor modelo, el de DenseNet con fine tunning, que predecía Neumonía Vírica cuando era Normal.
+
 \subsection{Red from scratch}
+
+FALTA EXPLICAR UN POCO LA ARQUITECTURA (COPIA Y PEGA DE TU P2 Y LISTO)
 
 \begin{table}[H]
 \centering
@@ -1087,13 +1153,15 @@ Nuestro objetivo en esta sección es intentar comprender un poco mejor qué cara
 
 \subsection{Mapas de calor}
 
-RESNET
+Vamos a ver el mapa de calor para dos de los modelos anteriores. En concreto para ResNet50 en su versión con los pesos fijos y para el mejor que hemos obtenido, Xception con fine tunning.
+
+Para Resnet obtenemos lo siguiente:
 
 \includegraphics[width=0.85\textwidth]{./images/resnetfilters}
 
 \includegraphics[width=0.85\textwidth]{./images/resnetheatmap}
 
-XCEPTION
+Para Xception:
 
 \includegraphics[width=0.85\textwidth]{./images/xceptionfilters}
 
@@ -1102,6 +1170,10 @@ XCEPTION
 
 
 \subsection{Conclusiones}
+
+Si comparamos las dos salidas obtenidas, podemos apreciar claramente una diferencia notable. En el primer caso, al estar los pesos de las capas convolucionales congelados, el modelo no se adapta al tipo de imagen que recibe, de ahí que la salida no tenga mucho sentido.\\
+
+En cambio, para el segundo modelo podemos apreciar que la red se centra en la zona central de las imágenes, que es justo el lugar de ella donde aparece la información más valiosa, evitando los bordes y esquinas donde la información es la misma en todas las clases.
 
 \section{Posibles propuestas de mejora}
 
