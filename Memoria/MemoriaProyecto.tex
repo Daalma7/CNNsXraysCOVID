@@ -206,7 +206,7 @@ En esta sección confeccionaremos distintos modelos convolucionales con distinta
 
 Principalmente nos hemos centrado en DenseNet121, que es el modelo inicial del que partimos, pero luego hemos probado otras arquitecturas similares partiendo de otros modelos conocidos para poder comparar.\\
 
-Por último, también hemos probado con un modelo "from scratch", basado en la arquitectura diseñada por David en la práctica 2 para uno de los ejercicios, para comprobar cómo funciona este modelo, que no está preentrenado y es un poco más simple que los anteriores.\\
+Por último, también hemos probado con los modelo "from scratch", basados en la arquitectura diseñada por nosotros en el bonus de la práctica 2 para uno de los ejercicios, para comprobar cómo funciona este modelo, que no está preentrenado y es un poco más simple que los anteriores.\\
 
 Para intentar que todos los modelos se entrenen en condiciones similares, hemos entrenado todos ellos durante 20 épocas.
 
@@ -358,7 +358,7 @@ En este caso vemos que existe una notoria mejoría, consiguiendo unos resultados
 
 Seguimos empleando la red preentrenada como extractor de características pero se realiza un preprocesado más exhaustivo de imágenes, con image augmentation y normalización, además de hacer un modelo denso de mayor profundidad.\\
 
-Además de hacer una normalización de las imágenes, para que tengan media cero y varianza 1, hemos detectado que hay imágenes que salen muy blancas y otras muy oscuras, luego debemos conseguir invarianza frente al brillo (añadiendo el parámetro brightness).\\
+Además de hacer una normalización de las imágenes, para que tengan media 0 y varianza 1, hemos detectado que hay imágenes que salen muy blancas y otras muy oscuras, luego debemos conseguir invarianza frente al brillo (añadiendo el parámetro brightness).\\
 
 En cuanto al data augmentation, los pulmones en las radiografías salen siempre verticales, por lo que no tiene mucho sentido añadir rotaciones pero sí flips horizontales. Los zooms de ampliación también pueden ser interesantes, puesto que las imágenes tienen siempre los pulmones en la zona central, y podemos evitar posibles fuentes de ruido de letras o huesos que tienen algunas de las imágenes en las zonas laterales, que se perderán haciendo zoom.\\
 
@@ -575,7 +575,7 @@ Los resultados obtenidos son bastante buenos, superando el 97\% de test accuracy
 
 \subsubsection{Modificaciones a aplicar a las siguientes redes}
 
-Ahora vamos a aplicar las siguientes modificaciones que hemos empleado en estas versiones a distintas arquitecturas distintas a DenseNetet121.
+Ahora vamos a aplicar las siguientes modificaciones que hemos empleado en estas versiones a arquitecturas distintas a DenseNet121.
 \begin{itemize}
 \item El esquema de modificaciones de la versión 2, donde utilizábamos la red inicial como extractor de características constante,  entrenando un pequeño modelo denso al final y utilizando el data augmentation que hemos visto. Notaremos a las redes con estas modificaciones con el nombre de la red base, seguido de EC (Extractor de Características)
 \item El esquema de modificacionesde la versión 3, donde utilizábamos un ajuste fino, empleando también el mismo data augmentation. Notaremos a las redes con estas modificaciones con el nombre de la red base, seguido de FT (Fine Tunning)
@@ -1113,7 +1113,7 @@ Observando la matriz de confusión vemos que, al igual que InceptionV3-FT,  8 de
 \subsubsection{Primera Versión: Red más compleja}
 Hemos decidido también hacer una prueba entrenando una red desde 0(``from scratch"), para ver cómo se adaptaba al conjunto de entrenamiento en caso de no usar pesos preestablecidos del challenge de Imagenet, con lo que la única información de la que dispondrá la deberá extraer de nuestro conjunto de entrenamiento. \\
 
-La red que decidimos usar fue una red que desarrolló David para el bonus de la práctica 2, adaptándola para este problema. Se trata de una red elaborada, la cual posee módulos residuales donde se calcula información a múltiples escalas. Además,  tiene un enfoque denso donde parte de la información de capas superiores se comunica a capas más avanzadas de la red.  Puesto que hicimos pruebas que no salieron bien probablemente por la dimensión de la red y el número de parámetros que tenía frente al tamaño del conjunto de entrenamiento, decidimos simplificarla un poco disminuyendo el número de módulos residuales y otros cambios. El esquema de la red es el siguiente:
+La primera red que decidimos usar fue una red que desarrolló David para el bonus de la práctica 2, adaptándola para este problema. Se trata de una red elaborada, la cual posee módulos residuales donde se calcula información a múltiples escalas. Además,  tiene un enfoque denso donde parte de la información de capas superiores se comunica a capas más avanzadas de la red.  Puesto que hicimos pruebas que no salieron bien probablemente por la dimensión de la red y el número de parámetros que tenía frente al tamaño del conjunto de entrenamiento, decidimos simplificarla un poco disminuyendo el número de módulos residuales y otros cambios. El esquema de la red es el siguiente:
 
 \begin{figure}[H]
   \centering
@@ -1229,7 +1229,7 @@ La red está formada por las siguientes capas:
 
 \end{lstlisting}
 
-Para tener unos mejores resultados hemos mantenido los parámetros y la estructura con la que fue ejecutado en su momento, hemos incluído un criterio de parada de entrenamiento por early stopping.\\
+Para tener unos mejores resultados hemos mantenido los parámetros y la estructura con la que fue ejecutado en su momento, y hemos incluído un criterio de parada de entrenamiento por early stopping.\\
 
 El modelo se ha entrenado durante 8 épocas con los siguientes resultados:
 
@@ -1308,7 +1308,7 @@ Red David                        & \textcolor[rgb]{0.129,0.129,0.129}{0.0416 } &
 
 Los resultados son bastante similares al modelo de David, y están bastante bien para tratarse de un modelo más simple,  incluso han mejorado a los resultados de David en cuanto a la accuracy en test.\\
 
-Después de haber probado estos modelos podemos llegar a la conclusión de que no es necesario utilizar forzosamente un modelo preentrenado para afrontar este problema, ya que conseguimos unos resultados interesantes desde un enfoque más simple. No obstante, para obtener el mejor modelo posible la potencia de entrenamiento de un modelo preentrenado es capaz de superar con bastante holgura a modelos entrenados ``from scratch" como hemos visto con DenseNet o Xception.
+Después de haber probado estos modelos podemos llegar a la conclusión de que no es necesario utilizar forzosamente un modelo preentrenado para afrontar este problema, ya que conseguimos unos resultados interesantes desde un enfoque más simple. No obstante, para obtener el mejor modelo posible la potencia de entrenamiento de un modelo preentrenado es capaz de superar con bastante holgura a modelos entrenados ``from scratch`` como hemos visto con DenseNet o Xception.
 
 \section{Análisis del modelo: mapas de activación, mapas de calor y conclusiones}
 
@@ -1321,7 +1321,7 @@ Nuestro objetivo en esta sección es intentar comprender un poco mejor qué cara
 
 Pensamos que una muy buena forma de visualizar cómo ha aprendido la red es viendo los mapas de activación de algunas de sus capas frente a una entrada determinada.  De esta manera podremos ver qué máscaras de entre las aprendidas en esa capa se activan, cuáles no, y en qué zonas lo hacen. De esta manera se podría llegar a intuir determinadas zonas de la imagen que son relevantes a la hora de hacer una determinada predicción.  Además se podrá ver también de qué forma se va manipulando y transformando la entrada conforme va pasando a lo largo de la red, desde el comienzo, que será la imagen original, hasta las últimas capas donde la información queda resumida en imágenes muy pequeñas donde el valor de cada pixel condensa una alta información y donde ya no se llega a distinguir la forma original de la imagen.\\
 
-Puesto que hay muchas capas en la red DenseNet121, y además hay bastantes canales por capa, hemos decidido restringir la salida de los mapas de activación a sólo unas determinadas capas,  4 para ser más precisos, de forma aproximadamente equitativamente distribuídas para intentar vislumbrar los hechos que acabamos de decir.  Puesto que el mapa de color escogido es YlGnBu, hay que tener cuidado puesto que las zonas azules serán las de máxima activación, y las zonas amarillas serán las de menor activación\\
+Puesto que hay muchas capas en la red Xception, y además hay bastantes canales por capa, hemos decidido restringir la salida de los mapas de activación a sólo unas determinadas capas,  4 para ser más precisos, de forma aproximadamente equitativamente distribuídas para intentar vislumbrar los hechos que acabamos de decir.  Puesto que el mapa de color escogido es YlGnBu, hay que tener cuidado puesto que las zonas azules serán las de máxima activación, y las zonas amarillas serán las de menor activación\\
 
 Los resultados que hemos obtenido son los siguientes:\\
 
@@ -1337,13 +1337,13 @@ Los resultados que hemos obtenido son los siguientes:\\
 \caption{Activaciones para la capa block3\_sepconv1\_act, para el elemento el segundo elemento del conjunto de test}
 \end{figure}
 
-\begin{figure}[]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{./images/actmap3.png}
 \caption{Activaciones para la capa conv2d\_14, para el elemento el segundo elemento del conjunto de test}
 \end{figure}
 
-\begin{figure}[]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{./images/actmap4.png}
 \caption{Activaciones para la capa block14\_sepconv2\_act, para el elemento el segundo elemento del conjunto de test}
@@ -1372,20 +1372,20 @@ Vamos a ver el mapa de calor para dos de los modelos anteriores. En concreto par
 
 Los resultados obtenidos se muestran a continuación:
 
-\begin{figure}[]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{./images/resnetfilters}
 \caption{Mapas de calor respecto a la última capa convolucional para las primeras 16 imágenes del conjunto de test para la red ResNet-EC}
 \end{figure}
 
-\begin{figure}[]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{./images/resnetheatmap}
 \caption{Mapas de calor respecto a la última capa convolucional para las primeras 16 imágenes del conjunto de test para la red ResNet-EC}
 \end{figure}
 
 
-\begin{figure}[]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{./images/xceptionfilters}
 \caption{Mapas de calor respecto a la última capa convolucional para las primeras 16 imágenes del conjunto de test para la red ResNet-EC}
