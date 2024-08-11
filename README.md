@@ -55,7 +55,7 @@ The results obtained were as follows (Models ending in 'EC' are those where the 
 Additionally, heatmaps (areas of the image most relevant for making the final classification) have been calculated and visualized for each image to be classified, allowing us to see which areas are the most significant within an image for two models, including the Xception-FT model, which yielded the best results in testing. Here, the heatmaps are shown for the last convolutional layer, both the actual heatmaps and those overlaid on the original images, for the first 16 images in the test set:
 
 <div align="center">
-    <img src="Memoria/images/xceptionfilters.png" width="421"/> 
+    <img src="Memoria/images/xceptionfilters.png" width="421px"/> 
     <img src="Memoria/images/heatmapXception.png" width="421px"/>
 </div>
 
