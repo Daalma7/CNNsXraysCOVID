@@ -1,4 +1,4 @@
-# Development of CNN to classify between COVID-19, PNEUMONIA OR HEALTHY LUNGS
+# Classification of Chest X-rays for COVID-19 Detection and Differentiation from Other Viral Pneumonias Using CNNs
 
 ![Python](https://img.shields.io/badge/python-3670A0?logo=python&logoColor=white)
 ![Keras](https://img.shields.io/badge/Keras-%23D00000.svg?logo=Keras&logoColor=white)
@@ -13,25 +13,25 @@
 ![ML](https://img.shields.io/badge/ML-finished?color=595828)
 ![AI](https://img.shields.io/badge/AI-finished?color=594628)
 ![CV](https://img.shields.io/badge/Computer_Vision-finished?color=1C2835)
-![COVID](https://img.shields.io/badge/COVID-19-finished?color=282C59)
+![COVID](https://img.shields.io/badge/COVID--19-finished?color=282C59)
 
-![Status](https://img.shields.io/badge/status-finished-Green)
+![Status](https://img.shields.io/badge/status-Finished-Green)
 ![Grade](https://img.shields.io/badge/grade-High_Honors-yellow)
 
 
-This repository contains the work done on the implementation and testing of un método que permite clasificar radiografías torácicas posteroanteriores con el objetivo de detectar pulmones enfermos por COVID-19 y diferenciarlos de otro tipo de neumonías víricas, utilizando técnicas de Visión por Computador y Aprendizaje Automático. Utiliza como base Redes Neuronales Convolucionales preentrenadas con conjuntos de datos no médicos (Imagenet challenge). You can read the project report [here](MasterThesis.pdf).
+This repository contains the work done on the implementation and testing of a method that allows for the classification of posteroanterior chest X-rays with the goal of detecting COVID-19-infected lungs and distinguishing them from other types of viral pneumonias, using Computer Vision and Machine Learning techniques. It is based on Convolutional Neural Networks pre-trained with non-medical datasets (Imagenet challenge) and user-defined CNNs. You can read the project report [here](MasterThesis.pdf).
 
 ## Abstract
-Es repositorio contiene un método que permite clasificar radiografías torácicas posteroanteriores con el objetivo de detectar pulmones enfermos por COVID-19 y diferenciarlos de otro tipo de neumonías víricas, utilizando técnicas de Visión por Computador y Aprendizaje Automático. Utiliza como base Redes Neuronales Convolucionales preentrenadas con conjuntos de datos no médicos (Imagenet challenge)
+The use of simple chest X-rays for the detection of thoracic pathologies is a highly effective technique and is considered the primary examination to perform due to the large amount of information it can provide. Clinically, pneumonia is defined as lung consolidation on a chest X-ray along with clinical signs and symptoms of respiratory infection (fever, cough, and expectoration). Lung consolidation is radiologically reflected by increased lung opacity due to the accumulation of substances denser than air. COVID-19 viral pneumonia has been a disease that, since the first case was detected in December 2019, has spread globally with a high rate of contagion, being declared a pandemic in March 2020. Since then, it has caused the greatest health crisis experienced globally in modern times, making pandemic control an urgent priority. Chest X-rays allow for the diagnosis of the disease and a better understanding of how it affects the body, which is why we consider their study to be highly relevant. However, it is possible to confuse viral pneumonia caused by COVID-19 with other viral pneumonias caused by different pathogens.
 
-El método es capaz de diferenciar entre pulmones sanos (normales), pulmones enfermos por COVID-19 y pulmones enfermos con otro tipo de neumonías víricas con un 98.75% de precisión.
+Therefore, with our study, we aim to develop an effective method for classifying posteroanterior chest X-rays using pre-trained Convolutional Neural Networks, which can distinguish patients with healthy lungs from those with viral pneumonia. Additionally, it should be able to differentiate between viral pneumonias, specifically focusing on whether the pathogen is COVID-19 or not, to improve diagnosis, study, and understanding of this disease. These pre-trained networks were trained on non-medical image datasets (Imagenet). Furthermore, we also experimented with creating our own CNNs for this same purpose.
 
-Además, somos capaces de mostrar las regiones discriminantes que la red encuentra donde aparecen los patrones que más caracterizan a cada una de las clases. Esto puede ayudar a entender mejor la forma en que se manifiesta el COVID-19 en radiografías, y las zonas en que más se diferencia de otras neumonías víricas.
+The best method explored is able to differentiate between healthy lungs (normal), lungs affected by COVID-19, and lungs affected by other types of viral pneumonia with 98.75% accuracy. Additionally, we can highlight the discriminative regions identified by the network where the most characteristic patterns for each class appear. This can help to better understand how COVID-19 manifests in X-rays and the areas where it differs most from other viral pneumonias.
 
-El proyecto fue presentado como proyecto final en nuestra asignatura de Visión por Computador recibiendo una calificación de excelencia.
+The project was presented as a final project in our Computer Vision subject, receiving a grade of high honors.
 
 ## Experimental setup
-El dataset empleado puede ser encontrado [aquí](https://www.kaggle.com/tawsifurrahman/covid19-radiography-database). Contiene imágenes de radiografías posteroanteriores de pulmones sanos, otros enfermos con COVID-19, y otros enfermos con otras neumonías víricas.
+The dataset used can be found [here](https://www.kaggle.com/tawsifurrahman/covid19-radiography-database). It contains posteroanterior chest X-ray images of healthy lungs, lungs affected by COVID-19, and lungs affected by other viral pneumonias. A random permutation was performed, selecting 80% for training and 20% for testing. Within the training set, a 10% validation split was used during training.
 
 <div align="center">
     <img src="Memoria/images/ejemploNORMAL.png" width="271px"/> 
@@ -40,10 +40,25 @@ El dataset empleado puede ser encontrado [aquí](https://www.kaggle.com/tawsifur
 
 </div>
 
-Se probaron múltiples redes, algunas preentrenadas con el dataset de Imagenet, y otras redes definidas y entrenadas desde 0. Este es el esquema de la red desarrollada por David, con bloques residuales y conexiones densas:
+Multiple networks were tested, some pre-trained with the Imagenet dataset, and others defined and trained from scratch. This is the schematic of the network developed by David, featuring residual blocks and dense connections:
+
 <div align="center">
-<img center=true, src="Memoria/images/ScratchDavid.png" width="824px"/> 
+<img src="Memoria/images/ScratchDavid.png" width="824px"/> 
 </div>
+
+The results obtained were as follows (Models ending in 'EC' are those where the base model was used as a feature extractor, and a small dense model was trained using those features with data augmentation. Models ending in 'FT' refer to performing Fine Tuning on the original model, allowing all the network's weights to be adjusted while only modifying the last layer).
+
+<div align="center">
+<img src="Memoria/images/ResultsTable.png" width="824px"/> 
+</div>
+
+Additionally, heatmaps (areas of the image most relevant for making the final classification) have been calculated and visualized for each image to be classified, allowing us to see which areas are the most significant within an image for two models, including the Xception-FT model, which yielded the best results in testing. Here, the heatmaps are shown for the last convolutional layer, both the actual heatmaps and those overlaid on the original images, for the first 16 images in the test set:
+
+<div align="center">
+    <img src="Memoria/images/xceptionfilters.png" width="421"/> 
+    <img src="Memoria/images/heatmapXception.png" width="421px"/>
+</div>
+
 
 ## Additional info
 - **Authors**: David Villar Martos, Alberto Luque Infante
